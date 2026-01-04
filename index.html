@@ -15,7 +15,7 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .receipt-card { background-color: #FDF8F5; padding: 1.5rem; border-radius: 2.5rem; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); }
-        .animate-fade { animation: fadeIn 0.2s ease-out; }
+        .animate-fade { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -39,13 +39,13 @@
                 close: <g><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></g>,
                 chart: <g><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></g>,
                 pin: <g><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></g>,
-                send: <g><line x1="22" y1="2" x2="11" y2="13"/><polyline points="22 2 15 22 11 13 2 9 22 2"/></g>,
-                check: <polyline points="20 6 9 17 4 12"/>,
-                history: <g><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></g>,
-                undo: <g><path d="M3 7V5c0-1.1.9-2 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><polyline points="9 11 12 14 15 11"/></g>,
-                target: <g><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></g>,
                 truck: <g><rect width="16" height="10" x="2" y="6" rx="2"/><path d="M18 8h3l3 3v5h-6"/><circle cx="6.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></g>,
                 card: <g><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></g>,
+                clipboard: <g><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></g>,
+                check: <polyline points="20 6 9 17 4 12"/>,
+                undo: <g><path d="M3 7V5c0-1.1.9-2 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><polyline points="9 11 12 14 15 11"/></g>,
+                send: <g><line x1="22" y1="2" x2="11" y2="13"/><polyline points="22 2 15 22 11 13 2 9 22 2"/></g>,
+                target: <g><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></g>,
                 gift: <g><rect width="18" height="14" x="3" y="8" rx="2"/><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0 5.997 0A4 4 0 0 0 17.997 5.125 3 3 0 1 0 12 5Z"/><line x1="12" x2="12" y1="22" y2="8"/></g>
             };
             return (
@@ -56,7 +56,7 @@
         };
 
         const flavorNames = { original: '原味', strawberry: '草莓', cocoa: '可可', matcha: '抹茶' };
-        const extraNames = { cream: '鮮奶油', bag: '提袋費($2)', receipt: '手開收據', sugar: '加糖粉', fork: '加叉子' };
+        const extraNames = { cream: '鮮奶油', bag: '提袋費($2)', receipt: '收據', sugar: '糖粉', fork: '叉子' };
         const bankInfo = { bankName: "中國信託 (822)", accountName: "彭永翔", accountNumber: "1755 4046 3472" };
 
         const productCategories = {
@@ -76,6 +76,9 @@
                 { id: '4_os', label: '原味+草莓', price: 60, balls: 4, flavors: ['original', 'strawberry'] },
                 { id: '4_om', label: '原味+抹茶', price: 55, balls: 4, flavors: ['original', 'matcha'] },
                 { id: '4_oc', label: '原味+可可', price: 50, balls: 4, flavors: ['original', 'cocoa'] },
+                { id: '4_sm', label: '草莓+抹茶', price: 65, balls: 4, flavors: ['strawberry', 'matcha'] },
+                { id: '4_sc', label: '草莓+可可', price: 60, balls: 4, flavors: ['strawberry', 'cocoa'] },
+                { id: '4_cm', label: '抹茶+可可', price: 60, balls: 4, flavors: ['matcha', 'cocoa'] },
             ],
             '綜合': [
                 { id: '8_mix', label: '8入 四色綜合', price: 110, balls: 8, flavors: ['original', 'strawberry', 'cocoa', 'matcha'] },
@@ -84,8 +87,12 @@
             '真空包': [
                 { id: 'v_40_o', label: '真空40 原味', price: 320, balls: 40, flavors: ['original'], vType: 40 },
                 { id: 'v_40_s', label: '真空40 草莓', price: 500, balls: 40, flavors: ['strawberry'], vType: 40 },
+                { id: 'v_40_c', label: '真空40 可可', price: 385, balls: 40, flavors: ['cocoa'], vType: 40 },
+                { id: 'v_40_m', label: '真空40 抹茶', price: 380, balls: 40, flavors: ['matcha'], vType: 40 },
                 { id: 'v_80_o', label: '真空80 原味', price: 550, balls: 80, flavors: ['original'], vType: 80 },
                 { id: 'v_80_s', label: '真空80 草莓', price: 790, balls: 80, flavors: ['strawberry'], vType: 80 },
+                { id: 'v_80_c', label: '真空80 可可', price: 700, balls: 80, flavors: ['cocoa'], vType: 80 },
+                { id: 'v_80_m', label: '真空80 抹茶', price: 750, balls: 80, flavors: ['matcha'], vType: 80 },
             ]
         };
 
@@ -93,8 +100,8 @@
             let large = 0, small = 0, v40 = 0, v80 = 0;
             (items || []).forEach(i => {
                 const id = i.id || '';
-                if (id.includes('8_') || id.includes('8_mix')) large += (i.qty || 0);
-                else if (id.includes('4_') || id.includes('4_mix')) small += (i.qty || 0);
+                if (id.includes('8_') || id === '8_mix') large += (i.qty || 0);
+                else if (id.includes('4_') || id === '4_mix') small += (i.qty || 0);
                 if (i.vType === 40) v40 += (i.qty || 0);
                 if (i.vType === 80) v80 += (i.qty || 0);
             });
@@ -135,18 +142,18 @@
             const [selectedReceipt, setSelectedReceipt] = useState(null);
 
             useEffect(() => {
-                const saved = localStorage.getItem('gege_vHistory_Stable_V1');
+                const saved = localStorage.getItem('gege_vHistory_Stable_Local_V21');
                 if (saved) { try { setOrders(JSON.parse(saved)); } catch(e) {} }
             }, []);
 
             useEffect(() => {
-                localStorage.setItem('gege_vHistory_Stable_V1', JSON.stringify(orders));
+                localStorage.setItem('gege_vHistory_Stable_Local_V21', JSON.stringify(orders));
             }, [orders]);
 
             const activeOrders = useMemo(() => orders.filter(o => !o.completed), [orders]);
             const historyOrders = useMemo(() => orders.filter(o => o.completed), [orders]);
 
-            // 當前頁面預覽計算
+            // 計算下單頁面金額
             const packingCurrent = useMemo(() => calculatePacking(currentOrder.items), [currentOrder.items]);
             const currentTotal = useMemo(() => {
                 const iSum = currentOrder.items.reduce((s, i) => s + (i.price * (i.qty || 0)), 0);
@@ -154,17 +161,21 @@
                 return iSum + bSum;
             }, [currentOrder.items, currentOrder.extras.bag, packingCurrent]);
 
+            // --- 修復營收統計功能 ---
             const monthlyStatistics = useMemo(() => {
                 const monthsData = {};
                 orders.forEach(order => {
-                    const date = new Date(order.timestamp);
-                    if (isNaN(date)) return;
+                    // 使用穩定的日期解析 (解析自 toLocaleString 或 ISO)
+                    let date = order.isoDate ? new Date(order.isoDate) : new Date(order.timestamp.replace('下午', ' PM').replace('上午', ' AM'));
+                    if (isNaN(date.getTime())) return;
+                    
                     const monthKey = `${date.getFullYear()}/${date.getMonth() + 1}`;
 
                     if (!monthsData[monthKey]) {
                         monthsData[monthKey] = { original: 0, strawberry: 0, cocoa: 0, matcha: 0, totalAmount: 0 };
                     }
-                    monthsData[monthKey].totalAmount += (order.totalAmount || 0);
+                    monthsData[monthKey].totalAmount += Number(order.totalAmount || 0);
+
                     order.items.forEach(item => {
                         const total = (item.balls || 0) * (item.qty || 0);
                         const perFlavor = total / (item.flavors?.length || 1);
@@ -183,7 +194,11 @@
                         batches: Math.floor(data[k] / 80),
                         remainder: Math.round(data[k] % 80)
                     })).filter(f => f.balls > 0)
-                })).sort((a, b) => b.month.localeCompare(a.month, undefined, {numeric: true}));
+                })).sort((a, b) => {
+                    const [ay, am] = a.month.split('/');
+                    const [by, bm] = b.month.split('/');
+                    return new Date(by, bm - 1) - new Date(ay, am - 1);
+                });
             }, [orders]);
 
             const doughTotalDemand = useMemo(() => {
@@ -200,25 +215,39 @@
             const handleAddItem = (opt) => {
                 const exist = currentOrder.items.find(i => i.id === opt.id);
                 if (exist) {
-                    setCurrentOrder({ ...currentOrder, items: currentOrder.items.map(i => i.id === opt.id ? { ...i, qty: (i.qty || 0) + 1 } : i) });
+                    setCurrentOrder({ ...currentOrder, items: currentOrder.items.map(i => i.id === opt.id ? { ...i, qty: (i.qty||0) + 1 } : i) });
                 } else {
                     setCurrentOrder({ ...currentOrder, items: [...currentOrder.items, { ...opt, qty: 1 }] });
                 }
             };
 
+            const handleUpdateQty = (id, val) => {
+                const num = val === '' ? '' : Math.max(0, parseInt(val) || 0);
+                setCurrentOrder({
+                    ...currentOrder,
+                    items: currentOrder.items.map(i => i.id === id ? { ...i, qty: num } : i).filter(i => i.qty !== 0)
+                });
+            };
+
             const handleSave = () => {
                 if (!currentOrder.name || currentOrder.items.length === 0) return;
-                const totalAmount = currentTotal;
-
+                const now = new Date();
                 if (editingId) {
-                    setOrders(prev => prev.map(o => o.id === editingId ? { ...currentOrder, id: editingId, totalAmount, timestamp: o.timestamp } : o));
+                    setOrders(prev => prev.map(o => o.id === editingId ? { ...currentOrder, id: editingId, totalAmount: currentTotal, timestamp: o.timestamp, isoDate: o.isoDate || now.toISOString() } : o));
                     setEditingId(null);
                 } else {
-                    setOrders(prev => [{ ...currentOrder, id: Date.now(), totalAmount, timestamp: new Date().toLocaleString() }, ...prev]);
+                    setOrders(prev => [{ ...currentOrder, id: Date.now(), totalAmount: currentTotal, timestamp: now.toLocaleString(), isoDate: now.toISOString() }, ...prev]);
                 }
                 setCurrentOrder({ name: '', phone: '', address: '', deliveryTime: '', deliveryMethod: '自取', paymentMethod: '店內結帳', note: '', items: [], extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, completed: false });
                 setActiveTab('list');
                 setListSubTab('active');
+            };
+
+            const handleEditClick = (order) => {
+                setCurrentOrder(order);
+                setEditingId(order.id);
+                setActiveTab('order');
+                setView('main');
             };
 
             const toggleComplete = (id) => {
@@ -229,17 +258,16 @@
                 const p = calculatePacking(order.items);
                 let payInfo = `【付款方式：${order.paymentMethod}】`;
                 if (order.paymentMethod === '匯款') {
-                    payInfo += `\n🏦 中信(822) ${bankInfo.accountNumber}\n👤 戶名：${bankInfo.accountName}\n提醒：匯款後請提供帳號末五碼核對。`;
+                    payInfo += `\n🏦 中信(822) ${bankInfo.accountNumber}\n👤 彭永翔 / 核對末五碼`;
                 } else if (order.paymentMethod === 'LinePay') {
-                    payInfo += `\n⚠️ 請出示 LinePay 付款條碼截圖以供對帳。`;
+                    payInfo += `\n⚠️ 請出示 LinePay 條碼截圖供對帳。`;
                 }
                 let itemsText = order.items.map(i => `• ${i.label} x ${i.qty} = $${i.price * i.qty}`).join('\n');
                 let extras = Object.entries(order.extras).filter(([k,v]) => v && k !== 'bag').map(([k]) => extraNames[k]).join('、');
                 let bagText = order.extras.bag ? `\n• 提袋費($2) x ${p.bag6+p.bag4} = $${(p.bag6+p.bag4)*2}` : '';
-                let coolerText = p.cooler > 0 ? `\n🎁 真空包贈送保冷袋 x ${p.cooler} 個` : '';
-                const text = `【華夫格格-訂單明細】\n客戶：${order.name}\n應付：$ ${order.totalAmount}\n${payInfo}\n--------------------\n${itemsText}${extras ? '\n• 加購：' + extras : ''}${bagText}${coolerText}\n--------------------\n備註：${order.note || '無'}\n感謝您的訂購！`;
+                const text = `【華夫格格-對帳明細】\n客戶：${order.name}\n總計：$ ${order.totalAmount}${payInfo}\n--------------------\n${itemsText}${extras ? '\n• 要求：' + extras : ''}${bagText}\n--------------------\n備註：${order.note || '無'}`;
                 const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
-                alert("已複製明細內容，可直接貼到 LINE！");
+                alert("對帳文字已複製成功！");
                 setView('main');
             };
 
@@ -249,65 +277,68 @@
                     <div className="min-h-screen bg-white animate-fade flex flex-col text-left font-black">
                         <div className="p-4 border-b flex items-center bg-white sticky top-0 z-50">
                             <button onClick={() => setView('main')} className="p-2 text-[#8E7D6F] flex items-center font-bold font-black"><Icon name="back" size={24}/> 返回</button>
-                            <h2 className="flex-1 text-center font-black text-[#5E503F]">對帳收據</h2>
-                            <button onClick={() => setView('main')} className="p-2 text-gray-300 font-black"><Icon name="close" size={24}/></button>
+                            <h2 className="flex-1 text-center font-black text-[#5E503F]">收據明細</h2>
+                            <div className="flex items-center gap-1">
+                                <button onClick={() => handleEditClick(selectedReceipt)} className="p-2 text-blue-500 active:scale-110"><Icon name="edit" size={24}/></button>
+                                <button onClick={() => setView('main')} className="p-2 text-gray-300 font-black"><Icon name="close" size={24}/></button>
+                            </div>
                         </div>
                         <div className="flex-1 overflow-y-auto p-4 pb-40">
                             <div className="receipt-card">
                                 <div className="text-center mb-6 border-b-2 border-dashed border-[#D5BDAF]/30 pb-4 font-black text-[#D5BDAF]">
                                     <h3 className="text-2xl font-black tracking-widest uppercase">華夫格格</h3>
-                                    <p className="text-[10px] opacity-40 uppercase tracking-widest">Belgian Waffle Manager</p>
+                                    <p className="text-[10px] opacity-40 uppercase tracking-widest font-bold">Stable Management</p>
                                 </div>
-                                <div className="text-center mb-6 font-black">
-                                    <p className="text-4xl font-black text-[#5E503F] tracking-tighter mb-3">{selectedReceipt.name}</p>
-                                    <div className="flex justify-center gap-2 mb-2">
-                                        <span className="bg-[#8E7D6F] text-white px-3 py-1 rounded-full text-[10px] font-black uppercase"><Icon name="truck" size={10} className="inline mr-1"/>{selectedReceipt.deliveryMethod}</span>
-                                        <span className="bg-[#D5BDAF] text-white px-3 py-1 rounded-full text-[10px] font-black uppercase"><Icon name="card" size={10} className="inline mr-1"/>{selectedReceipt.paymentMethod}</span>
+                                <div className="text-center mb-6 font-black text-[#5E503F]">
+                                    <p className="text-4xl font-black tracking-tighter mb-3 font-black">{selectedReceipt.name}</p>
+                                    <div className="flex justify-center gap-2 font-black">
+                                        <span className="bg-[#8E7D6F] text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter"><Icon name="truck" size={10} className="inline mr-1"/>{selectedReceipt.deliveryMethod}</span>
+                                        <span className="bg-[#D5BDAF] text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter"><Icon name="card" size={10} className="inline mr-1"/>{selectedReceipt.paymentMethod}</span>
                                     </div>
                                     {selectedReceipt.address && <p className="text-[11px] font-bold text-[#8E7D6F] flex items-center justify-center gap-1 mt-1 text-center font-black"><Icon name="pin" size={10}/>{selectedReceipt.address}</p>}
                                 </div>
-                                <div className="bg-white p-5 rounded-3xl border border-[#D5BDAF]/20 text-[12px] font-black mb-6">
+                                <div className="bg-white p-5 rounded-3xl border border-[#D5BDAF]/20 text-[12px] font-black mb-6 text-center">
                                     {selectedReceipt.paymentMethod === '匯款' ? (
-                                        <div className="space-y-1">
+                                        <div className="space-y-1 font-black">
                                             <p className="text-[#8E7D6F]">🏦 {bankInfo.bankName}</p>
                                             <p>👤 {bankInfo.accountName}</p>
                                             <p className="text-lg tracking-wider font-black">{bankInfo.accountNumber}</p>
-                                            <p className="text-[#D5BDAF] text-center mt-2 underline">匯款後請提供帳號末五碼</p>
+                                            <p className="text-[#D5BDAF] text-center mt-2 underline">匯款後提供帳號末五碼</p>
                                         </div>
                                     ) : selectedReceipt.paymentMethod === 'LinePay' ? (
                                         <div className="text-center py-2 text-red-500 font-black">
-                                            <p className="text-lg underline decoration-wavy">請出示 LinePay 條碼結帳</p>
+                                            <p className="text-lg underline decoration-wavy tracking-widest font-black">請出示 LinePay 條碼結帳</p>
                                         </div>
                                     ) : <p className="text-center opacity-40 py-2">付款方式：{selectedReceipt.paymentMethod}</p>}
                                 </div>
-                                <div className="space-y-3 font-bold border-t border-gray-100 pt-4 text-left">
+                                <div className="space-y-3 font-bold border-t border-gray-100 pt-4">
                                     {selectedReceipt.items.map((i, idx) => (
                                         <div key={idx} className="flex justify-between items-end border-b border-gray-50 pb-2">
-                                            <div className="text-left leading-tight"><p className="text-lg font-black">• {i.label}</p><p className="text-[10px] opacity-40">$ {i.price} x {i.qty}</p></div>
+                                            <div className="text-left leading-tight font-black"><p className="text-lg font-black">• {i.label}</p><p className="text-[10px] opacity-40">$ {i.price} x {i.qty}</p></div>
                                             <span className="text-[#8E7D6F] font-black">$ {i.price * i.qty}</span>
                                         </div>
                                     ))}
-                                    <div className="space-y-1 text-sm pt-2">
-                                        {Object.entries(selectedReceipt.extras).map(([k,v]) => (v && k !== 'bag') ? <div key={k} className="flex justify-between text-gray-500 font-bold"><span>• {extraNames[k]}</span><span>$ 0</span></div> : null)}
+                                    <div className="space-y-1 text-sm pt-2 font-black">
+                                        {Object.entries(selectedReceipt.extras).map(([k,v]) => (v && k !== 'bag') ? <div key={k} className="flex justify-between text-gray-500 font-black"><span>• {extraNames[k]}</span><span>$ 0</span></div> : null)}
                                         {selectedReceipt.extras.bag && (p.bag6 > 0 || p.bag4 > 0) && (
                                             <React.Fragment>
-                                                {p.bag6 > 0 && <div className="flex justify-between"><span>• 專用 6杯提袋 ($2) x {p.bag6}</span><span>$ {p.bag6 * 2}</span></div>}
-                                                {p.bag4 > 0 && <div className="flex justify-between"><span>• 專用 4杯提袋 ($2) x {p.bag4}</span><span>$ {p.bag4 * 2}</span></div>}
+                                                {p.bag6 > 0 && <div className="flex justify-between font-black"><span>• 專用 6杯提袋 ($2) x {p.bag6}</span><span>$ {p.bag6 * 2}</span></div>}
+                                                {p.bag4 > 0 && <div className="flex justify-between font-black"><span>• 專用 4杯提袋 ($2) x {p.bag4}</span><span>$ {p.bag4 * 2}</span></div>}
                                             </React.Fragment>
                                         )}
                                         {p.cooler > 0 && <div className="flex justify-between text-blue-600 font-black pt-1 bg-blue-50/50 p-2 rounded-xl mt-2 italic font-black"><span>• 贈送：真空包專用保冷袋</span><span>x {p.cooler} 個</span></div>}
                                     </div>
                                 </div>
-                                <div className="bg-[#8E7D6F] p-6 rounded-[2rem] flex justify-between items-center text-white my-6">
-                                    <p className="text-xs font-black uppercase">應付總額 TOTAL</p>
+                                <div className="bg-[#8E7D6F] p-6 rounded-[2rem] flex justify-between items-center text-white my-6 font-black">
+                                    <p className="text-xs font-black uppercase tracking-widest">應付總計 TOTAL</p>
                                     <p className="text-3xl font-black">$ {selectedReceipt.totalAmount}</p>
                                 </div>
-                                {selectedReceipt.note && <div className="bg-white p-4 rounded-2xl border-2 border-dashed border-[#D5BDAF]/30 text-xs italic font-bold text-center text-gray-500">"{selectedReceipt.note}"</div>}
+                                {selectedReceipt.note && <div className="bg-white p-4 rounded-2xl border-2 border-dashed border-[#D5BDAF]/30 text-xs italic font-bold text-center text-gray-500 font-black">"{selectedReceipt.note}"</div>}
                             </div>
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-50">
                             <button onClick={() => onCopyLine(selectedReceipt)} className="w-full bg-[#8E7D6F] text-white p-5 rounded-2xl font-black text-xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all font-black">
-                                <Icon name="send" /> 一鍵複製明細內容貼到 LINE
+                                <Icon name="send" /> 一鍵複製明細並回清單
                             </button>
                         </div>
                     </div>
@@ -318,10 +349,10 @@
                 <div className="min-h-screen pb-24 text-left font-black">
                     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#D5BDAF] p-3 flex justify-around shadow-lg rounded-t-[2rem]">
                         {[
-                            { id: 'order', label: editingId ? '修改' : '下單', icon: Icon({name:'plus', size:20}) },
-                            { id: 'calc', label: '備貨', icon: Icon({name:'chef', size:20}) },
-                            { id: 'stats', label: '統計', icon: Icon({name:'chart', size:20}) },
-                            { id: 'list', label: '清單', icon: Icon({name:'history', size:20}) },
+                            { id: 'order', label: editingId ? '修改' : '下單', icon: <Icon name="plus" size={20}/> },
+                            { id: 'calc', label: '備貨', icon: <Icon name="chef" size={20}/> },
+                            { id: 'stats', label: '數據', icon: <Icon name="chart" size={20}/> },
+                            { id: 'list', label: '清單', icon: <Icon name="clipboard" size={20}/> },
                         ].map(t => (
                             <button key={t.id} onClick={() => {setActiveTab(t.id); setEditingId(null);}} className={`flex flex-col items-center gap-1 p-2 rounded-2xl transition-all ${activeTab === t.id ? 'bg-[#FDF8F5] text-[#8E7D6F] scale-110 shadow-inner' : 'text-white opacity-70'}`}>
                                 {t.icon}<span className="text-[10px] font-bold font-black">{t.label}</span>
@@ -329,108 +360,109 @@
                         ))}
                     </nav>
 
-                    <main className="p-4 max-w-lg mx-auto space-y-6 pt-4 animate-fade">
+                    <main className="p-4 max-w-lg mx-auto space-y-6 pt-4 animate-fade font-black">
                         {activeTab === 'order' && (
                             <div className="space-y-4">
                                 <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 text-left">
-                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black"><Icon name="user" size={18} /> {editingId ? '正在修改訂單' : '客戶資料'}</h2>
-                                    <input type="text" placeholder="客戶姓名" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold text-base border-transparent focus:border-[#D5BDAF] border" value={currentOrder.name} onChange={e => setCurrentOrder({...currentOrder, name: e.target.value})} />
-                                    <input type="tel" placeholder="電話" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold text-base border-transparent focus:border-[#D5BDAF] border" value={currentOrder.phone} onChange={e => setCurrentOrder({...currentOrder, phone: e.target.value})} />
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black text-left font-black font-black"><Icon name="user" size={18} /> {editingId ? '修改訂單資料' : '客戶基本資料'}</h2>
+                                    <input type="text" placeholder="客戶姓名" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-black text-base border-transparent border font-black" value={currentOrder.name} onChange={e => setCurrentOrder({...currentOrder, name: e.target.value})} />
+                                    <input type="tel" placeholder="電話" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-black text-base border-transparent border font-black" value={currentOrder.phone} onChange={e => setCurrentOrder({...currentOrder, phone: e.target.value})} />
                                     <div className="grid grid-cols-2 gap-2 text-[10px] font-black">
                                         <div className="flex bg-[#F9F6F4] rounded-xl p-1">
                                             {['自取', '外送', 'Panda'].map(m => (
                                                 <button key={m} onClick={() => setCurrentOrder({...currentOrder, deliveryMethod: m})} className={`flex-1 py-1.5 rounded-lg font-black ${currentOrder.deliveryMethod === m ? 'bg-[#8E7D6F] text-white shadow-sm' : 'text-[#8E7D6F]'}`}>{m}</button>
                                             ))}
                                         </div>
-                                        <div className="flex bg-[#F9F6F4] rounded-xl p-1">
+                                        <div className="flex bg-[#F9F6F4] rounded-xl p-1 font-black">
                                             {['店內', 'LinePay', '匯款'].map(m => (
                                                 <button key={m} onClick={() => setCurrentOrder({...currentOrder, paymentMethod: m})} className={`flex-1 py-1.5 rounded-lg font-black ${currentOrder.paymentMethod === m ? 'bg-[#8E7D6F] text-white shadow-sm' : 'text-[#8E7D6F]'}`}>{m}</button>
                                             ))}
                                         </div>
                                     </div>
-                                    <input type="text" placeholder="地址 (外送必填)" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm font-black" value={currentOrder.address} onChange={e => setCurrentOrder({...currentOrder, address: e.target.value})} />
-                                    <input type="datetime-local" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-[#8E7D6F] font-black" value={currentOrder.deliveryTime} onChange={e => setCurrentOrder({...currentOrder, deliveryTime: e.target.value})} />
+                                    <input type="text" placeholder="地址 (外送必填)" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm font-black font-black" value={currentOrder.address} onChange={e => setCurrentOrder({...currentOrder, address: e.target.value})} />
+                                    <input type="datetime-local" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold text-[#8E7D6F] font-black font-black" value={currentOrder.deliveryTime} onChange={e => setCurrentOrder({...currentOrder, deliveryTime: e.target.value})} />
                                 </div>
 
                                 <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 font-black">
-                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black"><Icon name="cart" size={18} /> 產品規格選擇</h2>
-                                    <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black font-black font-black"><Icon name="cart" size={18} /> 產品規格選擇</h2>
+                                    <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar font-black">
                                         {Object.keys(productCategories).map(cat => (
                                             <button key={cat} onClick={() => setOrderCategory(cat)} className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[10px] font-black ${orderCategory === cat ? 'bg-[#8E7D6F] text-white shadow-md' : 'bg-[#E3D5CA]'}`}>{cat}</button>
                                         ))}
                                     </div>
                                     <div className="grid grid-cols-2 gap-2 text-left font-bold font-black">
                                         {productCategories[orderCategory].map(opt => (
-                                            <button key={opt.id} onClick={() => handleAddItem(opt)} className="p-3 bg-[#F9F6F4] rounded-2xl border border-transparent active:border-[#D5BDAF] transition-all">
+                                            <button key={opt.id} onClick={() => handleAddItem(opt)} className="p-3 bg-[#F9F6F4] rounded-2xl border border-transparent active:border-[#D5BDAF] transition-all text-left font-black">
                                                 <p className="text-xs font-black">{opt.label}</p>
                                                 <p className="text-[10px] text-[#8E7D6F] font-black">$ {opt.price}</p>
                                             </button>
                                         ))}
                                     </div>
                                     {currentOrder.items.length > 0 && (
-                                        <div className="pt-4 border-t border-dashed space-y-2 font-black">
+                                        <div className="pt-4 border-t border-dashed space-y-2 font-black text-left">
                                             {currentOrder.items.map(i => (
-                                                <div key={i.id} className="flex justify-between items-center bg-[#FDF8F5] p-3 rounded-xl border border-[#E3D5CA]/50 text-xs font-black">
+                                                <div key={i.id} className="flex justify-between items-center bg-[#FDF8F5] p-3 rounded-xl border border-[#E3D5CA]/50 text-xs">
                                                     <span className="flex-1 font-black">{i.label}</span>
-                                                    <div className="flex items-center gap-2">
-                                                        <button onClick={() => setCurrentOrder({...currentOrder, items: currentOrder.items.map(it => it.id === i.id ? {...it, qty: Math.max(0, it.qty - 1)} : it).filter(it => it.qty !== 0)})} className="p-1 active:scale-75 text-[#D5BDAF] font-black"><Icon name="minus" size={14}/></button>
+                                                    <div className="flex items-center gap-2 font-black">
+                                                        <button onClick={() => handleUpdateQty(i.id, (i.qty||0) - 1)} className="p-1 active:scale-75 text-[#D5BDAF] font-black"><Icon name="minus" size={14}/></button>
                                                         <span className="font-black w-6 text-center">{i.qty}</span>
-                                                        <button onClick={() => setCurrentOrder({...currentOrder, items: currentOrder.items.map(it => it.id === i.id ? {...it, qty: it.qty + 1} : it)})} className="p-1 active:scale-75 text-[#D5BDAF] font-black"><Icon name="plus" size={14}/></button>
+                                                        <button onClick={() => handleUpdateQty(i.id, (i.qty||0) + 1)} className="p-1 active:scale-75 text-[#D5BDAF] font-black"><Icon name="plus" size={14}/></button>
                                                     </div>
                                                 </div>
                                             ))}
-                                            <div className="bg-[#8E7D6F] text-white p-4 rounded-2xl flex justify-between shadow-md mt-2 font-black"><span>當前總金額</span><span>$ {currentTotal}</span></div>
+                                            <div className="bg-[#8E7D6F] text-white p-3 rounded-xl flex justify-between font-black shadow-md mt-2"><span>當前小計</span><span>$ {currentTotal}</span></div>
                                         </div>
                                     )}
                                 </div>
 
-                                <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 text-left font-black">
-                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black"><Icon name="gift" size={18} /> 加購項目與備註</h2>
+                                <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 font-black text-left font-black">
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black font-black font-black"><Icon name="gift" size={18} /> 加購項目與備註</h2>
                                     <div className="grid grid-cols-2 gap-2 text-[10px] font-black">
                                         {Object.entries(extraNames).map(([k, label]) => (
-                                            <button key={k} onClick={() => setCurrentOrder({...currentOrder, extras: {...currentOrder.extras, [k]: !currentOrder.extras[k]}})} className={`p-3 rounded-xl border flex items-center justify-between transition-all font-black ${currentOrder.extras[k] ? 'bg-[#D5BDAF] text-white' : 'bg-[#F9F6F4]'}`}><span>{label}</span>{currentOrder.extras[k] && <Icon name="check" size={14} />}</button>
+                                            <button key={k} onClick={() => setCurrentOrder({...currentOrder, extras: {...currentOrder.extras, [k]: !currentOrder.extras[k]}})} className={`p-3 rounded-xl border flex items-center justify-between transition-all font-black ${currentOrder.extras[k] ? 'bg-[#D5BDAF] text-white border-transparent shadow-sm' : 'bg-[#F9F6F4]'}`}><span>{label}</span>{currentOrder.extras[k] && <Icon name="check" size={14} />}</button>
                                         ))}
                                     </div>
-                                    <textarea placeholder="點此輸入特別備註叮嚀..." className="w-full bg-[#F9F6F4] rounded-xl p-4 outline-none text-sm font-black min-h-[80px]" value={currentOrder.note} onChange={e => setCurrentOrder({...currentOrder, note: e.target.value})}></textarea>
+                                    <textarea placeholder="點此輸入特別要求..." className="w-full bg-[#F9F6F4] rounded-xl p-4 outline-none text-sm font-black min-h-[80px] font-black font-black" value={currentOrder.note} onChange={e => setCurrentOrder({...currentOrder, note: e.target.value})}></textarea>
                                 </div>
-                                <button onClick={handleSave} className="w-full bg-[#8E7D6F] text-white p-5 rounded-[2rem] font-black text-xl shadow-xl active:scale-95 transition-all font-black">{editingId ? '確認修改訂單' : '確認儲存訂單'}</button>
+                                <button onClick={handleSave} className="w-full bg-[#8E7D6F] text-white p-5 rounded-[2rem] font-black text-xl shadow-xl active:scale-95 transition-all font-black font-black">確認儲存訂單</button>
                             </div>
                         )}
 
                         {activeTab === 'calc' && (
                             <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-[#E3D5CA] space-y-6 font-black text-left animate-fade font-black">
-                                <h2 className="text-xl font-black text-[#8E7D6F] flex items-center justify-center gap-3 font-black"><Icon name="chef" size={24} /> 當前揉麵總量需求 (僅計未完成)</h2>
-                                <div className="space-y-4 font-black">
+                                <h2 className="text-xl font-black text-[#8E7D6F] flex items-center justify-center gap-3 font-black"><Icon name="chef" size={24} /> 當前揉麵總量需求 (未完成單)</h2>
+                                <div className="space-y-4 font-black text-left font-black font-black">
                                     {doughTotalDemand.map(d => (
                                         <div key={d.name} className="p-6 bg-[#FDF8F5] rounded-3xl border border-[#D5BDAF]/20 flex justify-between items-center shadow-inner font-black">
                                             <p className="text-xl text-[#5E503F] font-black">{d.name}</p>
-                                            <div className="text-right font-black text-left">
-                                                <p className="text-2xl text-[#8E7D6F] font-black font-black">{d.batches > 0 ? `${d.batches} 團 又 ${d.remainder} 顆` : `1 團 (需求 ${d.total} 顆)`}</p>
-                                                <p className="text-[10px] opacity-40 uppercase tracking-widest text-[#D5BDAF] font-black">揉麵份量 (1團=80顆)</p>
+                                            <div className="text-right font-black">
+                                                <p className="text-2xl text-[#8E7D6F] font-black font-black font-black">{d.batches > 0 ? `${d.batches} 團 又 ${d.remainder} 顆` : `1 團 (僅需 ${d.total} 顆)`}</p>
+                                                <p className="text-[10px] opacity-40 uppercase text-[#D5BDAF] font-black">揉麵份量 (1團=80顆)</p>
                                             </div>
                                         </div>
                                     ))}
-                                    {doughTotalDemand.length === 0 && <div className="py-24 text-center opacity-30 italic font-black w-full text-lg font-black">目前清單無任何訂單</div>}
+                                    {doughTotalDemand.length === 0 && <div className="py-24 text-center opacity-30 italic font-black text-lg font-black font-black font-black">目前尚無備貨需求</div>}
                                 </div>
                             </div>
                         )}
 
                         {activeTab === 'stats' && (
-                            <div className="space-y-6 text-left font-black animate-fade font-black">
+                            <div className="space-y-6 text-left font-black animate-fade font-black text-left font-black">
                                 {monthlyStatistics.map(stat => (
                                     <div key={stat.month} className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 font-black">
-                                        <div className="flex justify-between items-end border-b-2 border-dashed border-[#D5BDAF]/30 pb-3 font-black">
-                                            <h2 className="text-2xl font-black text-[#8E7D6F]">{stat.month} 月統計</h2>
-                                            <p className="text-xl font-black text-[#5E503F] underline decoration-double">營收總額: $ {stat.totalAmount}</p>
+                                        <div className="flex justify-between items-end border-b-2 border-dashed border-[#D5BDAF]/30 pb-3 font-black text-left font-black font-black">
+                                            <h2 className="text-2xl font-black text-[#8E7D6F] font-black font-black font-black">{stat.month} 數據統計</h2>
+                                            <p className="text-xl font-black text-[#5E503F] underline decoration-double font-black font-black font-black font-black">月營收: $ {stat.totalAmount}</p>
                                         </div>
-                                        <div className="space-y-2 font-black">
+                                        <div className="space-y-2 font-black text-left font-black font-black">
+                                            <p className="text-[10px] text-[#D5BDAF] uppercase tracking-widest font-black font-black font-black font-black">— 各口味消耗團數 —</p>
                                             {stat.flavors.map((f, i) => (
-                                                <div key={f.name} className="flex justify-between p-4 bg-[#FDF8F5] rounded-2xl relative font-black">
+                                                <div key={f.name} className="flex justify-between p-4 bg-[#F9F6F4] rounded-2xl font-black font-black font-black font-black">
                                                     <div className="flex items-center gap-3">
                                                         <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-white ${i===0?'bg-yellow-400 font-black':'bg-[#D5BDAF]'}`}>{i+1}</span>
-                                                        <span className="font-black">{f.name}</span>
+                                                        <span className="font-black font-black font-black">{f.name}</span>
                                                     </div>
-                                                    <span className="text-[#8E7D6F] font-black">
+                                                    <span className="text-[#8E7D6F] font-black font-black font-black">
                                                         {f.batches > 0 ? `${f.batches} 團 又 ${f.remainder} 顆` : `${f.remainder} 顆`}
                                                     </span>
                                                 </div>
@@ -438,38 +470,39 @@
                                         </div>
                                     </div>
                                 ))}
-                                {monthlyStatistics.length === 0 && <div className="py-40 text-center opacity-30 italic font-black text-lg font-black">尚未有銷售紀錄</div>}
+                                {monthlyStatistics.length === 0 && <div className="py-40 text-center opacity-30 italic font-black text-lg font-black font-black font-black font-black font-black font-black">目前尚未有任何營收紀錄</div>}
                             </div>
                         )}
 
                         {activeTab === 'list' && (
-                            <div className="space-y-4 text-left font-black animate-fade font-black">
+                            <div className="space-y-4 text-left font-black animate-fade text-left font-black font-black font-black font-black">
                                 <div className="flex bg-[#E3D5CA] p-1.5 rounded-2xl mb-4 font-black">
-                                    <button onClick={() => setListSubTab('active')} className={`flex-1 py-2 rounded-xl text-sm transition-all font-black ${listSubTab === 'active' ? 'bg-white text-[#8E7D6F] shadow-sm' : 'text-white'}`}>待出貨 ({activeOrders.length})</button>
-                                    <button onClick={() => setListSubTab('history')} className={`flex-1 py-2 rounded-xl text-sm transition-all font-black ${listSubTab === 'history' ? 'bg-white text-[#8E7D6F] shadow-sm' : 'text-white'}`}>歷史訂單 ({historyOrders.length})</button>
+                                    <button onClick={() => setListSubTab('active')} className={`flex-1 py-2 rounded-xl text-sm transition-all font-black font-black ${listSubTab === 'active' ? 'bg-white text-[#8E7D6F] shadow-sm' : 'text-white'}`}>待出貨 ({activeOrders.length})</button>
+                                    <button onClick={() => setListSubTab('history')} className={`flex-1 py-2 rounded-xl text-sm transition-all font-black font-black ${listSubTab === 'history' ? 'bg-white text-[#8E7D6F] shadow-sm' : 'text-white'}`}>歷史訂單 ({historyOrders.length})</button>
                                 </div>
 
                                 {listSubTab === 'active' ? (
                                     activeOrders.map(o => (
-                                        <div key={o.id} className="bg-white rounded-[2.5rem] p-5 border border-[#E3D5CA] shadow-sm relative overflow-hidden font-black mb-4">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#D5BDAF] opacity-30 font-black"></div>
-                                            <div className="flex justify-between items-start mb-3 font-black">
-                                                <div onClick={() => {setSelectedReceipt(o); setView('receipt');}} className="flex-1 cursor-pointer font-black">
-                                                    <h3 className="text-xl font-black text-[#5E503F] underline decoration-[#D5BDAF]/30 underline-offset-4 decoration-dashed font-black">{o.name || '客戶'}</h3>
-                                                    <p className="text-lg font-black text-[#8E7D6F] mt-1">$ {o.totalAmount}</p>
-                                                    <p className="text-[10px] font-bold opacity-30 mt-1 uppercase font-black">{o.deliveryMethod} • {o.paymentMethod}</p>
+                                        <div key={o.id} className="bg-white rounded-[2.5rem] p-5 border border-[#E3D5CA] shadow-sm relative overflow-hidden font-black mb-4 font-black font-black font-black font-black">
+                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#D5BDAF] opacity-30 font-black font-black font-black font-black"></div>
+                                            <div className="flex justify-between items-start mb-3 font-black font-black font-black font-black">
+                                                <div onClick={() => {setSelectedReceipt(o); setView('receipt');}} className="flex-1 cursor-pointer font-black text-left font-black font-black font-black font-black">
+                                                    <h3 className="text-xl font-black text-[#5E503F] underline decoration-[#D5BDAF]/30 decoration-dashed font-black font-black font-black font-black font-black">{o.name || '客戶'}</h3>
+                                                    <p className="text-lg font-black text-[#8E7D6F] mt-1 font-black font-black font-black font-black">$ {o.totalAmount}</p>
+                                                    <p className="text-[10px] font-bold opacity-30 mt-1 uppercase tracking-widest font-black font-black font-black font-black font-black">{o.deliveryMethod} • {o.paymentMethod}</p>
                                                 </div>
-                                                <div className="flex flex-col gap-2 font-black">
-                                                    <button onClick={() => toggleComplete(o.id)} className="bg-green-50 text-green-500 p-2 rounded-full border border-green-100 active:scale-125 font-black"><Icon name="check" size={18}/></button>
-                                                    <button onClick={() => {setCurrentOrder(o); setEditingId(o.id); setActiveTab('order');}} className="text-[#D5BDAF] p-2 active:scale-125 font-black"><Icon name="edit" size={18}/></button>
+                                                <div className="flex flex-col gap-2 font-black text-right font-black font-black font-black font-black font-black font-black">
+                                                    <button onClick={() => toggleComplete(o.id)} title="標記完成" className="bg-green-50 text-green-500 p-2 rounded-full border border-green-100 active:scale-125 font-black font-black font-black font-black font-black font-black"><Icon name="check" size={18}/></button>
+                                                    <button onClick={() => handleEditClick(o)} className="text-[#D5BDAF] p-2 active:scale-125 font-black font-black font-black font-black font-black font-black font-black font-black"><Icon name="edit" size={18}/></button>
+                                                    <button onClick={() => {if(window.confirm('確定刪除？')) setOrders(prev => prev.filter(ord => ord.id !== o.id))}} className="text-red-200 p-2 font-black font-black font-black font-black font-black font-black font-black font-black"><Icon name="trash" size={18}/></button>
                                                 </div>
                                             </div>
-                                            <div className="bg-[#FDF8F5] p-3 rounded-2xl border border-[#D5BDAF]/20 shadow-inner font-black">
-                                                <p className="text-[9px] font-black text-[#8E7D6F] uppercase mb-1 flex items-center gap-1 font-black"><Icon name="target" size={10}/> 內部計量</p>
+                                            <div className="bg-[#FDF8F5] p-3 rounded-2xl border border-[#D5BDAF]/20 shadow-inner font-black text-left font-black font-black font-black font-black font-black font-black font-black font-black">
+                                                <p className="text-[9px] font-black text-[#8E7D6F] uppercase mb-1 flex items-center gap-1 font-black tracking-widest font-black font-black font-black font-black font-black font-black font-black font-black font-black"><Icon name="target" size={10}/> 備貨參考</p>
                                                 {getDoughDemand(o.items).map(d => (
-                                                    <div key={d.name} className="flex justify-between text-[11px] py-0.5 border-b border-white last:border-0 font-black">
+                                                    <div key={d.name} className="flex justify-between text-[11px] py-0.5 border-b border-white last:border-0 font-black text-left font-black font-black font-black font-black font-black font-black font-black font-black font-black">
                                                         <span>{d.name}</span>
-                                                        <span className="text-[#8E7D6F] font-black">{d.batches > 0 ? `${d.batches} 團 又 ${d.remainder} 顆` : `1 團 (僅需 ${d.remainder} 顆)`}</span>
+                                                        <span className="text-[#8E7D6F] font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black">{d.batches > 0 ? `${d.batches} 團 又 ${d.remainder} 顆` : `1 團 (僅需 ${d.remainder} 顆)`}</span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -477,22 +510,23 @@
                                     ))
                                 ) : (
                                     historyOrders.map(o => (
-                                        <div key={o.id} className="bg-[#F9F6F4] opacity-70 grayscale rounded-[2.5rem] p-5 border border-dashed border-[#D5BDAF] shadow-sm relative overflow-hidden font-black mb-4 font-black">
-                                            <div className="flex justify-between items-start font-black">
-                                                <div onClick={() => {setSelectedReceipt(o); setView('receipt');}} className="flex-1 cursor-pointer font-black">
-                                                    <h3 className="text-xl font-black text-gray-500 font-black">{o.name} (已完結)</h3>
-                                                    <p className="text-lg font-black text-gray-400 font-black">$ {o.totalAmount}</p>
+                                        <div key={o.id} className="bg-[#F9F6F4] opacity-70 grayscale rounded-[2.5rem] p-5 border border-dashed border-[#D5BDAF] shadow-sm relative overflow-hidden font-black mb-4 font-black text-left font-black font-black font-black font-black font-black font-black font-black font-black">
+                                            <div className="flex justify-between items-start font-black text-left font-black font-black font-black font-black font-black font-black font-black font-black font-black">
+                                                <div onClick={() => {setSelectedReceipt(o); setView('receipt');}} className="flex-1 cursor-pointer font-black text-left text-left font-black font-black font-black font-black font-black font-black font-black font-black font-black">
+                                                    <h3 className="text-xl font-black text-gray-500 font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black">{o.name} (已完結)</h3>
+                                                    <p className="text-lg font-black text-gray-400 font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black">$ {o.totalAmount}</p>
+                                                    <p className="text-[10px] opacity-40 font-black tracking-tight font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black">{o.timestamp}</p>
                                                 </div>
-                                                <div className="flex flex-col gap-2 font-black">
-                                                    <button onClick={() => toggleComplete(o.id)} className="bg-blue-50 text-blue-500 p-2 rounded-full border border-blue-100 font-black"><Icon name="undo" size={18}/></button>
-                                                    <button onClick={() => {if(window.confirm('確定永久刪除？')) setOrders(prev => prev.filter(ord => ord.id !== o.id))}} className="text-red-300 p-2 font-black"><Icon name="trash" size={18}/></button>
+                                                <div className="flex flex-col gap-2 font-black font-black font-black font-black font-black font-black font-black font-black font-black">
+                                                    <button onClick={() => toggleComplete(o.id)} title="還原單據" className="bg-blue-50 text-blue-500 p-2 rounded-full border border-blue-100 font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black"><Icon name="undo" size={18}/></button>
+                                                    <button onClick={() => {if(window.confirm('確定永久刪除？')) setOrders(prev => prev.filter(ord => ord.id !== o.id))}} className="text-red-300 p-2 font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black"><Icon name="trash" size={18}/></button>
                                                 </div>
                                             </div>
                                         </div>
                                     ))
                                 )}
-                                {activeOrders.length === 0 && listSubTab === 'active' && <div className="py-24 text-center opacity-30 italic font-black text-lg">目前清單無待出貨訂單</div>}
-                                {historyOrders.length === 0 && listSubTab === 'history' && <div className="py-24 text-center opacity-30 italic font-black text-lg">目前尚無歷史紀錄</div>}
+                                {activeOrders.length === 0 && listSubTab === 'active' && <div className="py-24 text-center opacity-30 italic font-black text-lg font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black">目前無待出貨單據</div>}
+                                {historyOrders.length === 0 && listSubTab === 'history' && <div className="py-24 text-center opacity-30 italic font-black text-lg font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black font-black">尚無歷史訂單紀錄</div>}
                             </div>
                         )}
                     </main>
