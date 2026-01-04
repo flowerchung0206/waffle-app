@@ -42,7 +42,10 @@
                 card: <g><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></g>,
                 send: <g><line x1="22" y1="2" x2="11" y2="13"/><polyline points="22 2 15 22 11 13 2 9 22 2"/></g>,
                 check: <polyline points="20 6 9 17 4 12"/>,
-                gift: <g><rect width="18" height="14" x="3" y="8" rx="2"/><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0 5.997 0A4 4 0 0 0 17.997 5.125 3 3 0 1 0 12 5Z"/><line x1="12" x2="12" y1="22" y2="8"/></g>
+                gift: <g><rect width="18" height="14" x="3" y="8" rx="2"/><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0 5.997 0A4 4 0 0 0 17.997 5.125 3 3 0 1 0 12 5Z"/><line x1="12" x2="12" y1="22" y2="8"/></g>,
+                chart: <g><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></g>,
+                close: <g><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></g>,
+                trophy: <g><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></g>
             };
             return (
                 <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -130,7 +133,7 @@
             const [view, setView] = useState('main'); // 'main' or 'receipt'
             const [activeTab, setActiveTab] = useState('order');
             const [orders, setOrders] = useState([]);
-            const [editingId, setEditingId] = useState(null); // 修改中的訂單 ID
+            const [editingId, setEditingId] = useState(null); 
             const [orderCategory, setOrderCategory] = useState('8入');
             const [currentOrder, setCurrentOrder] = useState({
                 name: '', phone: '', address: '', taxId: '', schoolCompany: '', deliveryTime: '', 
@@ -140,12 +143,12 @@
             const [selectedReceipt, setSelectedReceipt] = useState(null);
 
             useEffect(() => {
-                const saved = localStorage.getItem('gege_vFinal_Complete_v2');
+                const saved = localStorage.getItem('gege_vFinal_Stats');
                 if (saved) setOrders(JSON.parse(saved));
             }, []);
 
             useEffect(() => {
-                localStorage.setItem('gege_vFinal_Complete_v2', JSON.stringify(orders));
+                localStorage.setItem('gege_vFinal_Stats', JSON.stringify(orders));
             }, [orders]);
 
             const doughTotal = useMemo(() => {
@@ -160,6 +163,40 @@
                 return Object.entries(totals).map(([k, v]) => ({
                     name: flavorNames[k], batches: Math.floor(v / 80), remainder: Math.round(v % 80), total: Math.round(v)
                 })).filter(d => d.total > 0);
+            }, [orders]);
+
+            // --- 數據統計分析 ---
+            const statistics = useMemo(() => {
+                const flavorSales = { original: 0, strawberry: 0, cocoa: 0, matcha: 0 };
+                const monthlySales = {};
+
+                orders.forEach(order => {
+                    // 解析月份 (假設 timestamp 為 "2024/1/4 上午10:00:00")
+                    const dateParts = order.timestamp.split(' ')[0].split('/');
+                    const monthKey = `${dateParts[0]}/${dateParts[1]}`;
+                    
+                    let orderBalls = 0;
+                    order.items.forEach(item => {
+                        const totalBalls = (item.balls || 0) * (item.qty || 0);
+                        orderBalls += totalBalls;
+                        const perFlavor = totalBalls / (item.flavors?.length || 1);
+                        item.flavors?.forEach(f => {
+                            if (flavorSales[f] !== undefined) flavorSales[f] += perFlavor;
+                        });
+                    });
+
+                    monthlySales[monthKey] = (monthlySales[monthKey] || 0) + orderBalls;
+                });
+
+                const ranking = Object.entries(flavorSales)
+                    .map(([k, v]) => ({ name: flavorNames[k], count: Math.round(v) }))
+                    .sort((a, b) => b.count - a.count);
+
+                const monthlyData = Object.entries(monthlySales)
+                    .map(([month, count]) => ({ month, count }))
+                    .sort((a, b) => b.month > a.month ? -1 : 1);
+
+                return { ranking, monthlyData };
             }, [orders]);
 
             const handleAddItem = (opt) => {
@@ -185,16 +222,13 @@
                 const totalAmount = iSum + bSum;
 
                 if (editingId) {
-                    // 修改模式
-                    setOrders(orders.map(o => o.id === editingId ? { ...currentOrder, id: editingId, totalAmount, timestamp: new Date().toLocaleString() } : o));
+                    setOrders(orders.map(o => o.id === editingId ? { ...currentOrder, id: editingId, totalAmount, timestamp: o.timestamp } : o));
                     setEditingId(null);
                 } else {
-                    // 新增模式
                     const newOrder = { ...currentOrder, id: Date.now(), totalAmount, timestamp: new Date().toLocaleString() };
                     setOrders([newOrder, ...orders]);
                 }
 
-                // 重置
                 setCurrentOrder({ name: '', phone: '', address: '', taxId: '', schoolCompany: '', deliveryTime: '', deliveryMethod: '自取', paymentMethod: '店內結帳', items: [], extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, note: '' });
                 setActiveTab('list');
             };
@@ -242,7 +276,10 @@
                                 <Icon name="back" size={24} /> 返回
                             </button>
                             <h2 className="flex-1 text-center font-black text-[#5E503F]">對帳明細</h2>
-                            <div className="w-10"></div>
+                            {/* 新增的關閉按鈕 */}
+                            <button onClick={() => setView('main')} className="p-2 text-gray-300">
+                                <Icon name="close" size={24} />
+                            </button>
                         </div>
                         <div className="flex-1 overflow-y-auto p-4 pb-40">
                             <div className="receipt-container">
@@ -296,10 +333,10 @@
                                 </div>
 
                                 <div className="bg-[#8E7D6F] p-6 rounded-[2rem] flex justify-between items-center text-white mb-6 text-left">
-                                    <p className="text-xs font-black uppercase">應付總額 TOTAL</p>
+                                    <p className="text-xs font-black uppercase">應付總金額 TOTAL</p>
                                     <p className="text-3xl font-black">$ {selectedReceipt.totalAmount}</p>
                                 </div>
-                                {selectedReceipt.note && <div className="bg-white p-3 rounded-xl border-2 border-dashed border-[#D5BDAF]/30 text-xs italic font-bold text-center text-gray-500">"{selectedReceipt.note}"</div>}
+                                {selectedReceipt.note && <div className="bg-white p-3 rounded-xl border-2 border-dashed border-[#D5BDAF]/30 text-xs italic font-black text-center text-gray-500">"{selectedReceipt.note}"</div>}
                             </div>
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-50">
@@ -311,13 +348,14 @@
                 );
             }
 
-            // --- 視圖：主要分頁介面 ---
+            // --- 主界面 ---
             return (
                 <div className="min-h-screen pb-24 text-left font-black">
                     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#D5BDAF] p-3 flex justify-around shadow-lg rounded-t-[2rem]">
                         {[
                             { id: 'order', label: '下單', icon: 'plus' },
                             { id: 'calc', label: '麵糰', icon: 'chef' },
+                            { id: 'stats', label: '統計', icon: 'chart' }, // 新增統計分頁
                             { id: 'list', label: '清單', icon: 'list' },
                         ].map(t => (
                             <button key={t.id} onClick={() => {setActiveTab(t.id); setEditingId(null);}} className={`flex flex-col items-center gap-1 p-2 rounded-2xl transition-all ${activeTab === t.id ? 'bg-[#FDF8F5] text-[#8E7D6F] scale-110 shadow-inner' : 'text-white opacity-70'}`}>
@@ -330,22 +368,22 @@
                         {activeTab === 'order' && (
                             <div className="space-y-4 animate-fade">
                                 <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4">
-                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="user" size={18} /> {editingId ? '正在修改訂單' : '客戶基本資料'}</h2>
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black"><Icon name="user" size={18} /> {editingId ? '正在修改訂單' : '客戶基本資料'}</h2>
                                     <input type="text" placeholder="客戶姓名" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold" value={currentOrder.name} onChange={e => setCurrentOrder({...currentOrder, name: e.target.value})} />
                                     <input type="tel" placeholder="電話號碼" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold" value={currentOrder.phone} onChange={e => setCurrentOrder({...currentOrder, phone: e.target.value})} />
                                     <div className="grid grid-cols-2 gap-2 text-[11px]">
                                         <div className="flex bg-[#F9F6F4] rounded-xl p-1">
-                                            {['自取','外送','Panda'].map(m => (
-                                                <button key={m} onClick={()=>setCurrentOrder({...currentOrder, deliveryMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.deliveryMethod === m ?'bg-[#8E7D6F] text-white shadow-sm':'text-[#8E7D6F]'}`}>{m}</button>
+                                            {['自取', '外送', 'Panda'].map(m => (
+                                                <button key={m} onClick={() => setCurrentOrder({...currentOrder, deliveryMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.deliveryMethod === m ? 'bg-[#8E7D6F] text-white shadow-sm' : 'text-[#8E7D6F]'}`}>{m}</button>
                                             ))}
                                         </div>
                                         <div className="flex bg-[#F9F6F4] rounded-xl p-1">
-                                            {['店內','Line','匯款'].map(m => (
-                                                <button key={m} onClick={()=>setCurrentOrder({...currentOrder, paymentMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.paymentMethod === m ?'bg-[#8E7D6F] text-white shadow-sm':'text-[#8E7D6F]'}`}>{m}</button>
+                                            {['店內', 'Line', '匯款'].map(m => (
+                                                <button key={m} onClick={() => setCurrentOrder({...currentOrder, paymentMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.paymentMethod === m ? 'bg-[#8E7D6F] text-white shadow-sm' : 'text-[#8E7D6F]'}`}>{m}</button>
                                             ))}
                                         </div>
                                     </div>
-                                    <input type="text" placeholder="配送詳細地址 (自取可不填)" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.address} onChange={e => setCurrentOrder({...currentOrder, address: e.target.value})} />
+                                    <input type="text" placeholder="詳細地址 (自取可不填)" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.address} onChange={e => setCurrentOrder({...currentOrder, address: e.target.value})} />
                                     <div className="grid grid-cols-2 gap-3">
                                         <input type="text" placeholder="統編" className="bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.taxId} onChange={e => setCurrentOrder({...currentOrder, taxId: e.target.value})} />
                                         <input type="text" placeholder="學校/單位" className="bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.schoolCompany} onChange={e => setCurrentOrder({...currentOrder, schoolCompany: e.target.value})} />
@@ -357,13 +395,13 @@
                                     <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="cart" /> 產品規格選擇</h2>
                                     <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar text-[10px]">
                                         {Object.keys(productCategories).map(cat => (
-                                            <button key={cat} onClick={()=>setOrderCategory(cat)} className={`flex-shrink-0 px-4 py-1.5 rounded-full ${orderCategory===cat?'bg-[#8E7D6F] text-white shadow-md':'bg-[#E3D5CA]'}`}>{cat}</button>
+                                            <button key={cat} onClick={() => setOrderCategory(cat)} className={`flex-shrink-0 px-4 py-1.5 rounded-full ${orderCategory === cat ? 'bg-[#8E7D6F] text-white shadow-md' : 'bg-[#E3D5CA]'}`}>{cat}</button>
                                         ))}
                                     </div>
                                     <div className="grid grid-cols-2 gap-2 text-left font-bold">
                                         {productCategories[orderCategory].map(opt => (
                                             <button key={opt.id} onClick={() => handleAddItem(opt)} className="p-3 bg-[#F9F6F4] rounded-2xl border border-transparent active:border-[#D5BDAF] transition-all">
-                                                <p className="text-xs font-black">{opt.label}</p>
+                                                <p className="text-xs">{opt.label}</p>
                                                 <p className="text-[10px] text-[#8E7D6F] font-black">$ {opt.price}</p>
                                             </button>
                                         ))}
@@ -388,10 +426,10 @@
                                     <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="gift" /> 加購項目與備註</h2>
                                     <div className="grid grid-cols-2 gap-2 text-[10px]">
                                         {Object.entries(extraNames).map(([k, label]) => (
-                                            <button key={k} onClick={()=>setCurrentOrder({...currentOrder, extras: {...currentOrder.extras, [k]: !currentOrder.extras[k]}})} className={`p-3 rounded-xl border flex items-center justify-between transition-all ${currentOrder.extras[k]?'bg-[#D5BDAF] text-white':'bg-[#F9F6F4]'}`}><span>{label}</span>{currentOrder.extras[k]&&<Icon name="check" size={14}/>}</button>
+                                            <button key={k} onClick={() => setCurrentOrder({...currentOrder, extras: {...currentOrder.extras, [k]: !currentOrder.extras[k]}})} className={`p-3 rounded-xl border flex items-center justify-between transition-all ${currentOrder.extras[k] ? 'bg-[#D5BDAF] text-white' : 'bg-[#F9F6F4]'}`}><span>{label}</span>{currentOrder.extras[k] && <Icon name="check" size={14} />}</button>
                                         ))}
                                     </div>
-                                    <textarea placeholder="特別要求備註..." className="w-full bg-[#F9F6F4] rounded-xl p-4 outline-none text-sm min-h-[80px]" value={currentOrder.note} onChange={e=>setCurrentOrder({...currentOrder,note:e.target.value})}></textarea>
+                                    <textarea placeholder="特別要求備註..." className="w-full bg-[#F9F6F4] rounded-xl p-4 outline-none text-sm min-h-[80px]" value={currentOrder.note} onChange={e => setCurrentOrder({...currentOrder, note: e.target.value})}></textarea>
                                 </div>
                                 <button onClick={handleSaveOrder} className="w-full bg-[#8E7D6F] text-white p-5 rounded-[2rem] font-black text-xl shadow-xl active:scale-95 transition-all">{editingId ? '確認修改訂單' : '確認儲存訂單'}</button>
                                 {editingId && <button onClick={() => {setEditingId(null); handleSaveOrder();}} className="w-full text-gray-400 font-bold text-sm">取消修改</button>}
@@ -416,11 +454,54 @@
                             </div>
                         )}
 
+                        {/* --- 數據統計分頁 --- */}
+                        {activeTab === 'stats' && (
+                            <div className="space-y-6 animate-fade">
+                                {/* 每月總量統計 */}
+                                <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4">
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="chart" /> 每月鬆餅球數統計</h2>
+                                    <div className="space-y-3">
+                                        {statistics.monthlyData.length === 0 ? (
+                                            <p className="py-10 text-center opacity-30 italic font-black text-sm">尚未有訂單數據</p>
+                                        ) : (
+                                            statistics.monthlyData.map(data => (
+                                                <div key={data.month} className="flex items-center justify-between p-4 bg-[#F9F6F4] rounded-2xl">
+                                                    <span className="text-sm font-black text-[#5E503F]">{data.month} 月份</span>
+                                                    <span className="text-lg font-black text-[#8E7D6F]">{data.count} <span className="text-[10px] opacity-50 uppercase ml-1">Balls</span></span>
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* 熱銷口味排名 */}
+                                <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4">
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="trophy" /> 口味銷售熱點榜</h2>
+                                    <div className="space-y-3">
+                                        {statistics.ranking.filter(r => r.count > 0).length === 0 ? (
+                                            <p className="py-10 text-center opacity-30 italic font-black text-sm">尚未有銷售數據</p>
+                                        ) : (
+                                            statistics.ranking.map((rank, index) => (
+                                                <div key={rank.name} className="flex items-center justify-between p-4 bg-[#F9F6F4] rounded-2xl relative overflow-hidden group">
+                                                    {index === 0 && <div className="absolute top-0 left-0 w-1.5 h-full bg-yellow-400"></div>}
+                                                    <div className="flex items-center gap-4">
+                                                        <span className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black shadow-sm ${index === 0 ? 'bg-yellow-400 text-white' : 'bg-[#D5BDAF] text-white'}`}>{index + 1}</span>
+                                                        <span className="text-sm font-black text-[#5E503F]">{rank.name}鬆餅</span>
+                                                    </div>
+                                                    <span className="text-lg font-black text-[#8E7D6F]">{rank.count} <span className="text-[10px] opacity-50 uppercase ml-1">Balls</span></span>
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         {activeTab === 'list' && (
                             <div className="space-y-4 animate-fade text-left font-black">
                                 <h2 className="text-lg font-black text-[#8E7D6F] text-center mb-2 font-black uppercase tracking-widest">訂單清單</h2>
                                 {orders.map(o => (
-                                    <div key={o.id} className="bg-white rounded-[2rem] p-5 border border-[#E3D5CA] shadow-sm relative overflow-hidden group">
+                                    <div key={o.id} className="bg-white rounded-[2.5rem] p-5 border border-[#E3D5CA] shadow-sm relative overflow-hidden group">
                                         <div className="absolute top-0 left-0 w-1.5 h-full bg-[#D5BDAF] opacity-30"></div>
                                         <div className="flex justify-between items-start mb-3">
                                             <div onClick={() => {setSelectedReceipt(o); setView('receipt');}} className="flex-1 cursor-pointer">
@@ -429,9 +510,8 @@
                                                 <p className="text-[10px] font-bold opacity-30 mt-1 uppercase tracking-widest">{o.deliveryMethod} • {o.paymentMethod}</p>
                                             </div>
                                             <div className="flex flex-col gap-2">
-                                                <button onClick={() => setOrders(orders.filter(ord=>ord.id!==o.id))} className="text-red-200 p-2 active:scale-125"><Icon name="trash" size={18}/></button>
-                                                {/* 修改訂單按鈕 */}
-                                                <button onClick={() => handleEditClick(o)} className="text-[#D5BDAF] p-2 active:scale-125"><Icon name="edit" size={18}/></button>
+                                                <button onClick={() => setOrders(orders.filter(ord => ord.id !== o.id))} className="text-red-200 p-2 active:scale-125"><Icon name="trash" size={18} /></button>
+                                                <button onClick={() => handleEditClick(o)} className="text-[#D5BDAF] p-2 active:scale-125"><Icon name="edit" size={18} /></button>
                                             </div>
                                         </div>
                                         
