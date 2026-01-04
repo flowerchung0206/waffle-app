@@ -1,574 +1,461 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2113.65">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d6d6d; -webkit-text-stroke: #6d6d6d}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #0000ff; -webkit-text-stroke: #0000ff}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6b0001; -webkit-text-stroke: #6b0001}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #fb0007; -webkit-text-stroke: #fb0007}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000; min-height: 16.0px}
-    span.s1 {font-kerning: none; background-color: #ecf1f7}
-    span.s2 {font-kerning: none; color: #fb0007; background-color: #ecf1f7; -webkit-text-stroke: 0px #fb0007}
-    span.s3 {font-kerning: none; color: #2a2a2a; background-color: #ecf1f7; -webkit-text-stroke: 0px #2a2a2a}
-    span.s4 {font-kerning: none; color: #6b0001; background-color: #ecf1f7; -webkit-text-stroke: 0px #6b0001}
-    span.s5 {font-kerning: none; color: #000000; background-color: #ecf1f7; -webkit-text-stroke: 0px #000000}
-    span.s6 {font-kerning: none; color: #0000ff; background-color: #ecf1f7; -webkit-text-stroke: 0px #0000ff}
-    span.s7 {font: 14.0px 'PingFang TC'; font-kerning: none; background-color: #ecf1f7}
-    span.s8 {font-kerning: none; color: #18702b; background-color: #ecf1f7; -webkit-text-stroke: 0px #18702b}
-    span.s9 {font-kerning: none; color: #093c94; background-color: #ecf1f7; -webkit-text-stroke: 0px #093c94}
-    span.s10 {font-kerning: none; color: #137646; background-color: #ecf1f7; -webkit-text-stroke: 0px #137646}
-    span.s11 {font-kerning: none; color: #6f0ec3; background-color: #ecf1f7; -webkit-text-stroke: 0px #6f0ec3}
-    span.s12 {font-kerning: none}
-    span.s13 {font: 14.0px 'Apple Color Emoji'; font-kerning: none; background-color: #ecf1f7}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>華夫格格管理系統</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto+Sans+TC', sans-serif; background-color: #FDF8F5; margin: 0; padding: 0; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .receipt-container { background-color: #FDF8F5; padding: 1.5rem; border-radius: 2.5rem; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); }
+        .animate-fade { animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s4">html</span><span class="s5"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s1">"zh-TW"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s6">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s5"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">title</span><span class="s3">&gt;</span><span class="s7">華夫格格管理系統</span><span class="s3">&lt;/</span><span class="s4">title</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://unpkg.com/react@18/umd/react.production.min.js"</span><span class="s5"> </span><span class="s2">crossorigin</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"</span><span class="s5"> </span><span class="s2">crossorigin</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://unpkg.com/@babel/standalone/babel.min.js"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&amp;display=swap"</span><span class="s5"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"stylesheet"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">body</span><span class="s5"> { </span><span class="s1">font-family:</span><span class="s5"> </span><span class="s8">'Noto+Sans+TC'</span><span class="s5">, </span><span class="s9">sans-serif</span><span class="s5">; </span><span class="s1">background-color:</span><span class="s5"> </span><span class="s9">#FDF8F5</span><span class="s5">; </span><span class="s1">margin:</span><span class="s5"> </span><span class="s10">0</span><span class="s5">; </span><span class="s1">padding:</span><span class="s5"> </span><span class="s10">0</span><span class="s5">; }</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.no-scrollbar::-webkit-scrollbar</span><span class="s5"> { </span><span class="s2">display:</span><span class="s5"> </span><span class="s9">none</span><span class="s5">; }</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">input</span><span class="s5">[</span><span class="s9">type</span><span class="s5">=</span><span class="s8">"number"</span><span class="s5">]</span><span class="s1">::-webkit-inner-spin-button</span><span class="s5"> { </span><span class="s2">-webkit-appearance:</span><span class="s5"> </span><span class="s9">none</span><span class="s5">; </span><span class="s2">margin:</span><span class="s5"> </span><span class="s10">0</span><span class="s5">; }</span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">.receipt-container</span><span class="s5"> { </span><span class="s1">background-color:</span><span class="s5"> </span><span class="s9">#FDF8F5</span><span class="s5">; </span><span class="s1">padding:</span><span class="s5"> </span><span class="s10">1.5rem</span><span class="s5">; </span><span class="s1">border-radius:</span><span class="s5"> </span><span class="s10">2.5rem</span><span class="s5">; </span><span class="s1">box-shadow:</span><span class="s5"> </span><span class="s9">inset</span><span class="s5"> </span><span class="s10">0</span><span class="s5"> </span><span class="s10">2px</span><span class="s5"> </span><span class="s10">10px</span><span class="s5"> </span><span class="s9">rgba(</span><span class="s10">0</span><span class="s5">,</span><span class="s10">0</span><span class="s5">,</span><span class="s10">0</span><span class="s5">,</span><span class="s10">0.05</span><span class="s9">)</span><span class="s5">; }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">.animate-fade</span><span class="s1"> { </span><span class="s2">animation:</span><span class="s1"> </span><span class="s9">fadeIn</span><span class="s1"> </span><span class="s10">0.2s</span><span class="s1"> </span><span class="s9">ease-out</span><span class="s1">; }</span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s11">@keyframes</span><span class="s5"> </span><span class="s9">fadeIn</span><span class="s5"> { </span><span class="s9">from</span><span class="s5"> { </span><span class="s1">opacity:</span><span class="s5"> </span><span class="s10">0</span><span class="s5">; </span><span class="s1">transform:</span><span class="s5"> </span><span class="s9">translateY(</span><span class="s10">5px</span><span class="s9">)</span><span class="s5">; } </span><span class="s9">to</span><span class="s5"> { </span><span class="s1">opacity:</span><span class="s5"> </span><span class="s10">1</span><span class="s5">; </span><span class="s1">transform:</span><span class="s5"> </span><span class="s9">translateY(</span><span class="s10">0</span><span class="s9">)</span><span class="s5">; } }</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s3">&lt;</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"root"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text/babel"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const { useState, useMemo, useEffect, memo, useCallback } = React;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>// --- </span><span class="s7">安全圖示組件</span><span class="s1"> (SVG) ---</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const Icon = ({ name, size = 20, className = "" }) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const icons = {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>plus: &lt;path d="M12 5v14M5 12h14" /&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>minus: &lt;path d="M5 12h14" /&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>user: &lt;g&gt;&lt;path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>trash: &lt;g&gt;&lt;path d="M3 6h18"/&gt;&lt;path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/&gt;&lt;path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>edit: &lt;g&gt;&lt;path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/&gt;&lt;path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>cart: &lt;g&gt;&lt;circle cx="8" cy="21" r="1"/&gt;&lt;circle cx="19" cy="21" r="1"/&gt;&lt;path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>chef: &lt;g&gt;&lt;path d="M6 18h12"/&gt;&lt;path d="M12 10V4.5a2.5 2.5 0 0 0-5 0V10a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2V8"/&gt;&lt;path d="M12 10V4.5a2.5 2.5 0 0 1 5 0V10a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V8"/&gt;&lt;path d="M18 18a4 4 0 1 1-8 0"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>back: &lt;g&gt;&lt;polyline points="15 18 9 12 15 6"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>target: &lt;g&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;circle cx="12" cy="12" r="6"/&gt;&lt;circle cx="12" cy="12" r="2"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>pin: &lt;g&gt;&lt;path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/&gt;&lt;circle cx="12" cy="10" r="3"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>list: &lt;g&gt;&lt;line x1="8" x2="21" y1="6" y2="6"/&gt;&lt;line x1="8" x2="21" y1="12" y2="12"/&gt;&lt;line x1="8" x2="21" y1="18" y2="18"/&gt;&lt;line x1="3" x2="3.01" y1="6" y2="6"/&gt;&lt;line x1="3" x2="3.01" y1="12" y2="12"/&gt;&lt;line x1="3" x2="3.01" y1="18" y2="18"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>truck: &lt;g&gt;&lt;rect width="16" height="10" x="2" y="6" rx="2"/&gt;&lt;path d="M18 8h3l3 3v5h-6"/&gt;&lt;circle cx="6.5" cy="18.5" r="2.5"/&gt;&lt;circle cx="18.5" cy="18.5" r="2.5"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>card: &lt;g&gt;&lt;rect width="20" height="14" x="2" y="5" rx="2"/&gt;&lt;line x1="2" x2="22" y1="10" y2="10"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>send: &lt;g&gt;&lt;line x1="22" y1="2" x2="11" y2="13"/&gt;&lt;polyline points="22 2 15 22 11 13 2 9 22 2"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>check: &lt;polyline points="20 6 9 17 4 12"/&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>gift: &lt;g&gt;&lt;rect width="18" height="14" x="3" y="8" rx="2"/&gt;&lt;path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0 5.997 0A4 4 0 0 0 17.997 5.125 3 3 0 1 0 12 5Z"/&gt;&lt;line x1="12" x2="12" y1="22" y2="8"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>chart: &lt;g&gt;&lt;line x1="18" y1="20" x2="18" y2="10"/&gt;&lt;line x1="12" y1="20" x2="12" y2="4"/&gt;&lt;line x1="6" y1="20" x2="6" y2="14"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>close: &lt;g&gt;&lt;line x1="18" y1="6" x2="6" y2="18"/&gt;&lt;line x1="6" y1="6" x2="18" y2="18"/&gt;&lt;/g&gt;,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>trophy: &lt;g&gt;&lt;path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/&gt;&lt;path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/&gt;&lt;path d="M4 22h16"/&gt;&lt;path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/&gt;&lt;path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/&gt;&lt;path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/&gt;&lt;/g&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>return (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>{icons[name] || &lt;circle cx="12" cy="12" r="10" /&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/svg&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const flavorNames = { original: '</span><span class="s7">原味</span><span class="s1">', strawberry: '</span><span class="s7">草莓</span><span class="s1">', cocoa: '</span><span class="s7">可可</span><span class="s1">', matcha: '</span><span class="s7">抹茶</span><span class="s1">' };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const extraNames = { cream: '</span><span class="s7">鮮奶油</span><span class="s1">', bag: '</span><span class="s7">加購提袋</span><span class="s1">', receipt: '</span><span class="s7">手開收據</span><span class="s1">', sugar: '</span><span class="s7">加糖粉</span><span class="s1">', fork: '</span><span class="s7">加叉子</span><span class="s1">' };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const bankInfo = { bankName: "</span><span class="s7">中國信託</span><span class="s1"> (822)", accountName: "</span><span class="s7">彭永翔</span><span class="s1">", accountNumber: "1755 4046 3472" };</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const productCategories = {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>'8</span><span class="s7">入</span><span class="s1">': [</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '8_orig', label: '8</span><span class="s7">入</span><span class="s1"> </span><span class="s7">原味</span><span class="s1">', price: 75, balls: 8, flavors: ['original'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '8_straw', label: '8</span><span class="s7">入</span><span class="s1"> </span><span class="s7">草莓</span><span class="s1">', price: 95, balls: 8, flavors: ['strawberry'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '8_matcha', label: '8</span><span class="s7">入</span><span class="s1"> </span><span class="s7">抹茶</span><span class="s1">', price: 80, balls: 8, flavors: ['matcha'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '8_cocoa', label: '8</span><span class="s7">入</span><span class="s1"> </span><span class="s7">可可</span><span class="s1">', price: 75, balls: 8, flavors: ['cocoa'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>'4</span><span class="s7">入</span><span class="s1">': [</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_orig', label: '4</span><span class="s7">入</span><span class="s1"> </span><span class="s7">原味</span><span class="s1">', price: 45, balls: 4, flavors: ['original'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_straw', label: '4</span><span class="s7">入</span><span class="s1"> </span><span class="s7">草莓</span><span class="s1">', price: 60, balls: 4, flavors: ['strawberry'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_matcha', label: '4</span><span class="s7">入</span><span class="s1"> </span><span class="s7">抹茶</span><span class="s1">', price: 55, balls: 4, flavors: ['matcha'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_cocoa', label: '4</span><span class="s7">入</span><span class="s1"> </span><span class="s7">可可</span><span class="s1">', price: 50, balls: 4, flavors: ['cocoa'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>'4</span><span class="s7">入雙色</span><span class="s1">': [</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_os', label: '</span><span class="s7">原味</span><span class="s1">+</span><span class="s7">草莓</span><span class="s1">', price: 60, balls: 4, flavors: ['original', 'strawberry'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_om', label: '</span><span class="s7">原味</span><span class="s1">+</span><span class="s7">抹茶</span><span class="s1">', price: 55, balls: 4, flavors: ['original', 'matcha'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_oc', label: '</span><span class="s7">原味</span><span class="s1">+</span><span class="s7">可可</span><span class="s1">', price: 50, balls: 4, flavors: ['original', 'cocoa'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_sm', label: '</span><span class="s7">草莓</span><span class="s1">+</span><span class="s7">抹茶</span><span class="s1">', price: 65, balls: 4, flavors: ['strawberry', 'matcha'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_sc', label: '</span><span class="s7">草莓</span><span class="s1">+</span><span class="s7">可可</span><span class="s1">', price: 60, balls: 4, flavors: ['strawberry', 'cocoa'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_cm', label: '</span><span class="s7">抹茶</span><span class="s1">+</span><span class="s7">可可</span><span class="s1">', price: 60, balls: 4, flavors: ['matcha', 'cocoa'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>'</span><span class="s7">綜合</span><span class="s1">': [</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '8_mix', label: '8</span><span class="s7">入</span><span class="s1"> </span><span class="s7">四色綜合</span><span class="s1">', price: 110, balls: 8, flavors: ['original', 'strawberry', 'cocoa', 'matcha'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: '4_mix', label: '4</span><span class="s7">入</span><span class="s1"> </span><span class="s7">四色綜合</span><span class="s1">', price: 65, balls: 4, flavors: ['original', 'strawberry', 'cocoa', 'matcha'] },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>'</span><span class="s7">真空包</span><span class="s1">': [</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_40_o', label: '</span><span class="s7">真空</span><span class="s1">40 </span><span class="s7">原味</span><span class="s1">', price: 320, balls: 40, flavors: ['original'], vType: 40 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_40_s', label: '</span><span class="s7">真空</span><span class="s1">40 </span><span class="s7">草莓</span><span class="s1">', price: 500, balls: 40, flavors: ['strawberry'], vType: 40 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_40_c', label: '</span><span class="s7">真空</span><span class="s1">40 </span><span class="s7">可可</span><span class="s1">', price: 385, balls: 40, flavors: ['cocoa'], vType: 40 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_40_m', label: '</span><span class="s7">真空</span><span class="s1">40 </span><span class="s7">抹茶</span><span class="s1">', price: 380, balls: 40, flavors: ['matcha'], vType: 40 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_80_o', label: '</span><span class="s7">真空</span><span class="s1">80 </span><span class="s7">原味</span><span class="s1">', price: 550, balls: 80, flavors: ['original'], vType: 80 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_80_s', label: '</span><span class="s7">真空</span><span class="s1">80 </span><span class="s7">草莓</span><span class="s1">', price: 790, balls: 80, flavors: ['strawberry'], vType: 80 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_80_c', label: '</span><span class="s7">真空</span><span class="s1">80 </span><span class="s7">可可</span><span class="s1">', price: 700, balls: 80, flavors: ['cocoa'], vType: 80 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{ id: 'v_80_m', label: '</span><span class="s7">真空</span><span class="s1">80 </span><span class="s7">抹茶</span><span class="s1">', price: 750, balls: 80, flavors: ['matcha'], vType: 80 },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>]</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const calculatePacking = (items) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>let large = 0, small = 0, v40 = 0, v80 = 0;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>(items || []).forEach(i =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const id = i.id || '';</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (id.includes('8_') || id === '8_mix') large += (i.qty || 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>else if (id.includes('4_') || id === '4_mix') small += (i.qty || 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (i.vType === 40) v40 += (i.qty || 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (i.vType === 80) v80 += (i.qty || 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>let bag6 = 0, bag4 = 0;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>let tL = large, tS = small;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>while (tL &gt;= 9 || tS &gt;= 12) { bag6++; tL = Math.max(0, tL - 9); tS = Math.max(0, tS - 12); }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>while (tL &gt; 0 || tS &gt; 0) { bag4++; tL = Math.max(0, tL - 5); tS = Math.max(0, tS - 6); }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>return { bag6, bag4, cooler: Math.ceil(v40 / 2) + v80 };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const getDoughDemand = (items) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const counts = { original: 0, strawberry: 0, cocoa: 0, matcha: 0 };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>(items || []).forEach(i =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const totalBalls = (i.balls || 0) * (i.qty || 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const flavors = i.flavors || [];</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>flavors.forEach(f =&gt; { if (counts[f] !== undefined) counts[f] += totalBalls / flavors.length; });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>return Object.entries(counts)</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>.filter(([_, v]) =&gt; v &gt; 0)</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>.map(([k, v]) =&gt; ({</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>name: flavorNames[k],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>batches: Math.floor(v / 80),</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>remainder: Math.round(v % 80),</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>total: Math.round(v)</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}));</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>// --- </span><span class="s7">主應用邏輯</span><span class="s1"> ---</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const App = () =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const [view, setView] = useState('main'); // 'main' or 'receipt'</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const [activeTab, setActiveTab] = useState('order');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const [orders, setOrders] = useState([]);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const [editingId, setEditingId] = useState(null);<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const [orderCategory, setOrderCategory] = useState('8</span><span class="s7">入</span><span class="s1">');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const [currentOrder, setCurrentOrder] = useState({</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>name: '', phone: '', address: '', taxId: '', schoolCompany: '', deliveryTime: '',<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>deliveryMethod: '</span><span class="s7">自取</span><span class="s1">', paymentMethod: '</span><span class="s7">店內結帳</span><span class="s1">', items: [],<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, note: ''</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const [selectedReceipt, setSelectedReceipt] = useState(null);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const saved = localStorage.getItem('gege_vFinal_Stats');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (saved) setOrders(JSON.parse(saved));</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}, []);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>localStorage.setItem('gege_vFinal_Stats', JSON.stringify(orders));</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}, [orders]);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const doughTotal = useMemo(() =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const totals = { original: 0, strawberry: 0, cocoa: 0, matcha: 0 };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>orders.forEach(o =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>(o.items || []).forEach(i =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>const balls = (i.balls || 0) * (i.qty || 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>const flavors = i.flavors || [];</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>flavors.forEach(f =&gt; { if (totals[f] !== undefined) totals[f] += balls / flavors.length; });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>return Object.entries(totals).map(([k, v]) =&gt; ({</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>name: flavorNames[k], batches: Math.floor(v / 80), remainder: Math.round(v % 80), total: Math.round(v)</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>})).filter(d =&gt; d.total &gt; 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}, [orders]);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>// --- </span><span class="s7">數據統計分析</span><span class="s1"> ---</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const statistics = useMemo(() =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const flavorSales = { original: 0, strawberry: 0, cocoa: 0, matcha: 0 };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const monthlySales = {};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>orders.forEach(order =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>// </span><span class="s7">解析月份</span><span class="s1"> (</span><span class="s7">假設</span><span class="s1"> timestamp </span><span class="s7">為</span><span class="s1"> "2024/1/4 </span><span class="s7">上午</span><span class="s1">10:00:00")</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>const dateParts = order.timestamp.split(' ')[0].split('/');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>const monthKey = `${dateParts[0]}/${dateParts[1]}`;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>let orderBalls = 0;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>order.items.forEach(item =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>const totalBalls = (item.balls || 0) * (item.qty || 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>orderBalls += totalBalls;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>const perFlavor = totalBalls / (item.flavors?.length || 1);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>item.flavors?.forEach(f =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>if (flavorSales[f] !== undefined) flavorSales[f] += perFlavor;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>monthlySales[monthKey] = (monthlySales[monthKey] || 0) + orderBalls;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const ranking = Object.entries(flavorSales)</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>.map(([k, v]) =&gt; ({ name: flavorNames[k], count: Math.round(v) }))</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>.sort((a, b) =&gt; b.count - a.count);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const monthlyData = Object.entries(monthlySales)</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>.map(([month, count]) =&gt; ({ month, count }))</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>.sort((a, b) =&gt; b.month &gt; a.month ? -1 : 1);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>return { ranking, monthlyData };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}, [orders]);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const handleAddItem = (opt) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const existing = currentOrder.items.find(i =&gt; i.id === opt.id);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (existing) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>setCurrentOrder({</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>...currentOrder,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>items: currentOrder.items.map(i =&gt; i.id === opt.id ? { ...i, qty: (i.qty || 0) + 1 } : i)</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} else {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>setCurrentOrder({</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>...currentOrder,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>items: [...currentOrder.items, { ...opt, qty: 1 }]</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const handleSaveOrder = () =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (!currentOrder.name || currentOrder.items.length === 0) return;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const p = calculatePacking(currentOrder.items);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const iSum = currentOrder.items.reduce((s, i) =&gt; s + (i.price * (i.qty || 0)), 0);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const bSum = currentOrder.extras.bag ? (p.bag6 + p.bag4) * 2 : 0;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const totalAmount = iSum + bSum;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (editingId) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>setOrders(orders.map(o =&gt; o.id === editingId ? { ...currentOrder, id: editingId, totalAmount, timestamp: o.timestamp } : o));</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>setEditingId(null);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} else {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>const newOrder = { ...currentOrder, id: Date.now(), totalAmount, timestamp: new Date().toLocaleString() };</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>setOrders([newOrder, ...orders]);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setCurrentOrder({ name: '', phone: '', address: '', taxId: '', schoolCompany: '', deliveryTime: '', deliveryMethod: '</span><span class="s7">自取</span><span class="s1">', paymentMethod: '</span><span class="s7">店內結帳</span><span class="s1">', items: [], extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, note: '' });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setActiveTab('list');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const handleEditClick = (order) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setCurrentOrder(order);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setEditingId(order.id);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setActiveTab('order');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>const onCopyLine = (order) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const p = calculatePacking(order.items);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>let payInfo = `</span><span class="s7">【付款方式：</span><span class="s1">${order.paymentMethod}</span><span class="s7">】</span><span class="s1">`;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (order.paymentMethod === '</span><span class="s7">匯款</span><span class="s1">') {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>payInfo += `\n</span><span class="s13">🏦</span><span class="s1"> </span><span class="s7">中信</span><span class="s1">(822) ${bankInfo.accountNumber}\n</span><span class="s13">👤</span><span class="s1"> </span><span class="s7">戶名：</span><span class="s1">${bankInfo.accountName}\n(</span><span class="s7">匯款後請提供末五碼核對</span><span class="s1">)`;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>let itemsText = order.items.map(i =&gt; `• ${i.label} x ${i.qty} = $${i.price * i.qty}`).join('\n');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>let extraList = [];</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (order.extras.cream) extraList.push('</span><span class="s7">鮮奶油</span><span class="s1">');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (order.extras.sugar) extraList.push('</span><span class="s7">加糖粉</span><span class="s1">');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (order.extras.fork) extraList.push('</span><span class="s7">加叉子</span><span class="s1">');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>if (order.extras.receipt) extraList.push('</span><span class="s7">附收據</span><span class="s1">');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>let extrasText = extraList.length &gt; 0 ? `\n• </span><span class="s7">其他要求：</span><span class="s1">${extraList.join('</span><span class="s7">、</span><span class="s1">')}` : '';</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>let bagText = order.extras.bag ? `\n• </span><span class="s7">提袋費</span><span class="s1">($2)</span><span class="s7">：</span><span class="s1">${p.bag6 + p.bag4} </span><span class="s7">個</span><span class="s1"> = $${(p.bag6 + p.bag4) * 2}` : '';</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>let coolerText = p.cooler &gt; 0 ? `\n</span><span class="s13">🎁</span><span class="s1"> </span><span class="s7">真空包贈送保冷袋：</span><span class="s1">${p.cooler} </span><span class="s7">個</span><span class="s1">` : '';</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const fullText = `</span><span class="s7">【華夫格格</span><span class="s1"> - </span><span class="s7">訂單對帳單】</span><span class="s1">\n</span><span class="s7">客戶：</span><span class="s1">${order.name}\n</span><span class="s7">配送：</span><span class="s1">${order.deliveryMethod}\n</span><span class="s7">時間：</span><span class="s1">${order.deliveryTime?.replace('T',' ')}\n${payInfo}\n--------------------\n${itemsText}${extrasText}${bagText}${coolerText}\n--------------------\n</span><span class="s13">💰</span><span class="s1"> </span><span class="s7">總計金額：</span><span class="s1">$ ${order.totalAmount}\n</span><span class="s7">備註：</span><span class="s1">${order.note || '</span><span class="s7">無</span><span class="s1">'}\n\n</span><span class="s7">感謝您的訂購！</span><span class="s1">`;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const textArea = document.createElement("textarea");</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>textArea.value = fullText; document.body.appendChild(textArea);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>textArea.select(); document.execCommand('copy'); document.body.removeChild(textArea);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>alert("</span><span class="s7">對帳文字已複製成功！</span><span class="s1">");</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setView('main');</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>// --- </span><span class="s7">視圖：收據明細頁面</span><span class="s1"> ---</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>if (view === 'receipt' &amp;&amp; selectedReceipt) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>const p = calculatePacking(selectedReceipt.items);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>return (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="min-h-screen bg-white animate-fade flex flex-col text-left"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="p-4 border-b flex items-center bg-white sticky top-0 z-50"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onClick={() =&gt; setView('main')} className="p-2 text-[#8E7D6F] flex items-center font-bold"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;Icon name="back" size={24} /&gt; </span><span class="s7">返回</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h2 className="flex-1 text-center font-black text-[#5E503F]"&gt;</span><span class="s7">對帳明細</span><span class="s1">&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>{/* </span><span class="s7">新增的關閉按鈕</span><span class="s1"> */}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onClick={() =&gt; setView('main')} className="p-2 text-gray-300"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;Icon name="close" size={24} /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex-1 overflow-y-auto p-4 pb-40"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="receipt-container"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="text-center mb-6 border-b-2 border-dashed border-[#D5BDAF]/30 pb-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h3 className="text-2xl font-black text-[#D5BDAF] tracking-widest"&gt;</span><span class="s7">華夫格格</span><span class="s1">&lt;/h3&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-[10px] opacity-40 uppercase tracking-widest"&gt;Belgian Waffles&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="text-center space-y-2 mb-6 text-left flex flex-col items-center"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-4xl font-black text-[#5E503F] tracking-tighter"&gt;{selectedReceipt.name}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex justify-center gap-2"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;span className="bg-[#8E7D6F] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase"&gt;&lt;Icon name="truck" size={10} className="inline mr-1"/&gt;{selectedReceipt.deliveryMethod}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;span className="bg-[#D5BDAF] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase"&gt;&lt;Icon name="card" size={10} className="inline mr-1"/&gt;{selectedReceipt.paymentMethod}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-[11px] font-bold text-gray-400"&gt;{selectedReceipt.phone || '</span><span class="s7">無電話紀錄</span><span class="s1">'}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>{selectedReceipt.address &amp;&amp; &lt;p className="text-[11px] font-bold text-[#8E7D6F] flex items-center justify-center gap-1"&gt;&lt;Icon name="pin" size={10}/&gt;{selectedReceipt.address}&lt;/p&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                                </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="space-y-4 mb-6 font-bold border-t border-gray-100 pt-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-[10px] text-[#D5BDAF] uppercase tracking-widest text-left"&gt;● </span><span class="s7">訂購品項</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>{selectedReceipt.items.map((i, idx) =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div key={idx} className="flex justify-between items-end border-b border-gray-50 pb-2"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="text-left leading-tight"&gt;&lt;p className="text-lg"&gt;• {i.label}&lt;/p&gt;&lt;p className="text-[10px] opacity-40"&gt;$ {i.price} x {i.qty}&lt;/p&gt;&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;span className="text-[#8E7D6F]"&gt;$ {i.price * i.qty}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>))}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                                    </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-[10px] text-[#D5BDAF] uppercase tracking-widest pt-2 text-left"&gt;● </span><span class="s7">加購與服務</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="space-y-1 text-sm pt-1 text-left"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{Object.entries(selectedReceipt.extras).map(([key, value]) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>if (key === 'bag') return null;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>return value ? (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div key={key} className="flex justify-between text-[#5E503F] border-b border-gray-50 pb-1"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span&gt;• {extraNames[key]}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span className="text-[#8E7D6F]"&gt;$ 0&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>) : null;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>})}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{selectedReceipt.extras.bag &amp;&amp; (p.bag6 &gt; 0 || p.bag4 &gt; 0) &amp;&amp; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;React.Fragment&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>{p.bag6 &gt; 0 &amp;&amp; &lt;div className="flex justify-between"&gt;&lt;span&gt;• </span><span class="s7">專用</span><span class="s1"> 6</span><span class="s7">杯提袋</span><span class="s1"> ($2) x {p.bag6}&lt;/span&gt;&lt;span&gt;$ {p.bag6 * 2}&lt;/span&gt;&lt;/div&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>{p.bag4 &gt; 0 &amp;&amp; &lt;div className="flex justify-between"&gt;&lt;span&gt;• </span><span class="s7">專用</span><span class="s1"> 4</span><span class="s7">杯提袋</span><span class="s1"> ($2) x {p.bag4}&lt;/span&gt;&lt;span&gt;$ {p.bag4 * 2}&lt;/span&gt;&lt;/div&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/React.Fragment&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>)}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{p.cooler &gt; 0 &amp;&amp; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="flex justify-between text-blue-600 font-black pt-1"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;span&gt;• </span><span class="s7">贈送：真空包專用保冷袋</span><span class="s1">&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;span&gt;x {p.cooler} </span><span class="s7">個</span><span class="s1"> ($0)&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>)}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-[#8E7D6F] p-6 rounded-[2rem] flex justify-between items-center text-white mb-6 text-left"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-xs font-black uppercase"&gt;</span><span class="s7">應付總金額</span><span class="s1"> TOTAL&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;p className="text-3xl font-black"&gt;$ {selectedReceipt.totalAmount}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>{selectedReceipt.note &amp;&amp; &lt;div className="bg-white p-3 rounded-xl border-2 border-dashed border-[#D5BDAF]/30 text-xs italic font-black text-center text-gray-500"&gt;"{selectedReceipt.note}"&lt;/div&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-50"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onClick={() =&gt; onCopyLine(selectedReceipt)} className="w-full bg-[#8E7D6F] text-white p-5 rounded-2xl font-black text-xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;Icon name="send" /&gt; </span><span class="s7">一鍵複製明細並回清單</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>// --- </span><span class="s7">主界面</span><span class="s1"> ---</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>return (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="min-h-screen pb-24 text-left font-black"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#D5BDAF] p-3 flex justify-around shadow-lg rounded-t-[2rem]"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>{[</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>{ id: 'order', label: '</span><span class="s7">下單</span><span class="s1">', icon: 'plus' },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>{ id: 'calc', label: '</span><span class="s7">麵糰</span><span class="s1">', icon: 'chef' },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>{ id: 'stats', label: '</span><span class="s7">統計</span><span class="s1">', icon: 'chart' }, // </span><span class="s7">新增統計分頁</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>{ id: 'list', label: '</span><span class="s7">清單</span><span class="s1">', icon: 'list' },</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>].map(t =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button key={t.id} onClick={() =&gt; {setActiveTab(t.id); setEditingId(null);}} className={`flex flex-col items-center gap-1 p-2 rounded-2xl transition-all ${activeTab === t.id ? 'bg-[#FDF8F5] text-[#8E7D6F] scale-110 shadow-inner' : 'text-white opacity-70'}`}&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;Icon name={t.icon} size={20} /&gt;&lt;span className="text-[10px] font-bold"&gt;{t.label}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/nav&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;main className="p-4 max-w-lg mx-auto space-y-6 pt-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>{activeTab === 'order' &amp;&amp; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="space-y-4 animate-fade"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 font-black"&gt;&lt;Icon name="user" size={18} /&gt; {editingId ? '</span><span class="s7">正在修改訂單</span><span class="s1">' : '</span><span class="s7">客戶基本資料</span><span class="s1">'}&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input type="text" placeholder="</span><span class="s7">客戶姓名</span><span class="s1">" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold" value={currentOrder.name} onChange={e =&gt; setCurrentOrder({...currentOrder, name: e.target.value})} /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input type="tel" placeholder="</span><span class="s7">電話號碼</span><span class="s1">" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold" value={currentOrder.phone} onChange={e =&gt; setCurrentOrder({...currentOrder, phone: e.target.value})} /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="grid grid-cols-2 gap-2 text-[11px]"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="flex bg-[#F9F6F4] rounded-xl p-1"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>{['</span><span class="s7">自取</span><span class="s1">', '</span><span class="s7">外送</span><span class="s1">', 'Panda'].map(m =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;button key={m} onClick={() =&gt; setCurrentOrder({...currentOrder, deliveryMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.deliveryMethod === m ? 'bg-[#8E7D6F] text-white shadow-sm' : 'text-[#8E7D6F]'}`}&gt;{m}&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="flex bg-[#F9F6F4] rounded-xl p-1"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>{['</span><span class="s7">店內</span><span class="s1">', 'Line', '</span><span class="s7">匯款</span><span class="s1">'].map(m =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;button key={m} onClick={() =&gt; setCurrentOrder({...currentOrder, paymentMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.paymentMethod === m ? 'bg-[#8E7D6F] text-white shadow-sm' : 'text-[#8E7D6F]'}`}&gt;{m}&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input type="text" placeholder="</span><span class="s7">詳細地址</span><span class="s1"> (</span><span class="s7">自取可不填</span><span class="s1">)" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.address} onChange={e =&gt; setCurrentOrder({...currentOrder, address: e.target.value})} /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="grid grid-cols-2 gap-3"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;input type="text" placeholder="</span><span class="s7">統編</span><span class="s1">" className="bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.taxId} onChange={e =&gt; setCurrentOrder({...currentOrder, taxId: e.target.value})} /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;input type="text" placeholder="</span><span class="s7">學校</span><span class="s1">/</span><span class="s7">單位</span><span class="s1">" className="bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.schoolCompany} onChange={e =&gt; setCurrentOrder({...currentOrder, schoolCompany: e.target.value})} /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input type="datetime-local" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-[#8E7D6F]" value={currentOrder.deliveryTime} onChange={e =&gt; setCurrentOrder({...currentOrder, deliveryTime: e.target.value})} /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"&gt;&lt;Icon name="cart" /&gt; </span><span class="s7">產品規格選擇</span><span class="s1">&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar text-[10px]"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{Object.keys(productCategories).map(cat =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;button key={cat} onClick={() =&gt; setOrderCategory(cat)} className={`flex-shrink-0 px-4 py-1.5 rounded-full ${orderCategory === cat ? 'bg-[#8E7D6F] text-white shadow-md' : 'bg-[#E3D5CA]'}`}&gt;{cat}&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="grid grid-cols-2 gap-2 text-left font-bold"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{productCategories[orderCategory].map(opt =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;button key={opt.id} onClick={() =&gt; handleAddItem(opt)} className="p-3 bg-[#F9F6F4] rounded-2xl border border-transparent active:border-[#D5BDAF] transition-all"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-xs"&gt;{opt.label}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-[10px] text-[#8E7D6F] font-black"&gt;$ {opt.price}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>{currentOrder.items.length &gt; 0 &amp;&amp; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="pt-4 border-t border-dashed space-y-2 font-black"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>{currentOrder.items.map(i =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div key={i.id} className="flex justify-between items-center bg-[#FDF8F5] p-3 rounded-xl border border-[#E3D5CA]/50 text-xs"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span className="flex-1"&gt;{i.label}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;div className="flex items-center gap-2"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;button onClick={() =&gt; setCurrentOrder({...currentOrder, items: currentOrder.items.map(it =&gt; it.id === i.id ? {...it, qty: Math.max(0, (it.qty||0)-1)} : it).filter(it =&gt; it.qty !== 0)})} className="p-1 active:scale-75 text-[#D5BDAF]"&gt;&lt;Icon name="minus" size={14}/&gt;&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;input type="number" value={i.qty} onChange={(e) =&gt; {const val = e.target.value === '' ? '' : parseInt(e.target.value)||0; setCurrentOrder({...currentOrder, items: currentOrder.items.map(it =&gt; it.id === i.id ? {...it, qty: val} : it)})}} className="w-10 bg-white border rounded p-1 text-center outline-none" /&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;button onClick={() =&gt; setCurrentOrder({...currentOrder, items: currentOrder.items.map(it =&gt; it.id === i.id ? {...it, qty: (it.qty||0)+1} : it)})} className="p-1 active:scale-75 text-[#D5BDAF]"&gt;&lt;Icon name="plus" size={14}/&gt;&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>)}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 text-left"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"&gt;&lt;Icon name="gift" /&gt; </span><span class="s7">加購項目與備註</span><span class="s1">&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="grid grid-cols-2 gap-2 text-[10px]"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{Object.entries(extraNames).map(([k, label]) =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;button key={k} onClick={() =&gt; setCurrentOrder({...currentOrder, extras: {...currentOrder.extras, [k]: !currentOrder.extras[k]}})} className={`p-3 rounded-xl border flex items-center justify-between transition-all ${currentOrder.extras[k] ? 'bg-[#D5BDAF] text-white' : 'bg-[#F9F6F4]'}`}&gt;&lt;span&gt;{label}&lt;/span&gt;{currentOrder.extras[k] &amp;&amp; &lt;Icon name="check" size={14} /&gt;}&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;textarea placeholder="</span><span class="s7">特別要求備註</span><span class="s1">..." className="w-full bg-[#F9F6F4] rounded-xl p-4 outline-none text-sm min-h-[80px]" value={currentOrder.note} onChange={e =&gt; setCurrentOrder({...currentOrder, note: e.target.value})}&gt;&lt;/textarea&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button onClick={handleSaveOrder} className="w-full bg-[#8E7D6F] text-white p-5 rounded-[2rem] font-black text-xl shadow-xl active:scale-95 transition-all"&gt;{editingId ? '</span><span class="s7">確認修改訂單</span><span class="s1">' : '</span><span class="s7">確認儲存訂單</span><span class="s1">'}&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>{editingId &amp;&amp; &lt;button onClick={() =&gt; {setEditingId(null); handleSaveOrder();}} className="w-full text-gray-400 font-bold text-sm"&gt;</span><span class="s7">取消修改</span><span class="s1">&lt;/button&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>)}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>{activeTab === 'calc' &amp;&amp; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="bg-white rounded-[2rem] p-8 shadow-sm border border-[#E3D5CA] space-y-6 animate-fade font-black text-left"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h2 className="text-xl font-black text-[#8E7D6F] flex items-center justify-center gap-3"&gt;&lt;Icon name="chef" /&gt; </span><span class="s7">當前揉麵總量需求</span><span class="s1">&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="space-y-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>{doughTotal.map(d =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div key={d.name} className="p-6 bg-[#FDF8F5] rounded-3xl border border-[#D5BDAF]/20 flex justify-between items-center shadow-inner"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;p className="text-xl text-[#5E503F]"&gt;{d.name}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="text-right"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-2xl text-[#8E7D6F]"&gt;{d.batches &gt; 0 ? `${d.batches} </span><span class="s7">團</span><span class="s1"> </span><span class="s7">又</span><span class="s1"> ${d.remainder} </span><span class="s7">顆</span><span class="s1">` : `1 </span><span class="s7">團</span><span class="s1"> (</span><span class="s7">需求</span><span class="s1"> ${d.total} </span><span class="s7">顆</span><span class="s1">)`}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-[10px] opacity-40 uppercase tracking-widest"&gt;</span><span class="s7">揉麵單位</span><span class="s1"> (1</span><span class="s7">團</span><span class="s1">=80</span><span class="s7">顆</span><span class="s1">)&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>{doughTotal.length === 0 &amp;&amp; &lt;div className="py-24 text-center opacity-30 italic text-lg w-full"&gt;</span><span class="s7">目前無訂單製作需求</span><span class="s1">&lt;/div&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>)}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>{/* --- </span><span class="s7">數據統計分頁</span><span class="s1"> --- */}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>{activeTab === 'stats' &amp;&amp; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="space-y-6 animate-fade"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>{/* </span><span class="s7">每月總量統計</span><span class="s1"> */}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"&gt;&lt;Icon name="chart" /&gt; </span><span class="s7">每月鬆餅球數統計</span><span class="s1">&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="space-y-3"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{statistics.monthlyData.length === 0 ? (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;p className="py-10 text-center opacity-30 italic font-black text-sm"&gt;</span><span class="s7">尚未有訂單數據</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>) : (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>statistics.monthlyData.map(data =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div key={data.month} className="flex items-center justify-between p-4 bg-[#F9F6F4] rounded-2xl"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span className="text-sm font-black text-[#5E503F]"&gt;{data.month} </span><span class="s7">月份</span><span class="s1">&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span className="text-lg font-black text-[#8E7D6F]"&gt;{data.count} &lt;span className="text-[10px] opacity-50 uppercase ml-1"&gt;Balls&lt;/span&gt;&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>))</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>)}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>{/* </span><span class="s7">熱銷口味排名</span><span class="s1"> */}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"&gt;&lt;Icon name="trophy" /&gt; </span><span class="s7">口味銷售熱點榜</span><span class="s1">&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="space-y-3"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>{statistics.ranking.filter(r =&gt; r.count &gt; 0).length === 0 ? (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;p className="py-10 text-center opacity-30 italic font-black text-sm"&gt;</span><span class="s7">尚未有銷售數據</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>) : (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>statistics.ranking.map((rank, index) =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div key={rank.name} className="flex items-center justify-between p-4 bg-[#F9F6F4] rounded-2xl relative overflow-hidden group"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>{index === 0 &amp;&amp; &lt;div className="absolute top-0 left-0 w-1.5 h-full bg-yellow-400"&gt;&lt;/div&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;div className="flex items-center gap-4"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;span className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black shadow-sm ${index === 0 ? 'bg-yellow-400 text-white' : 'bg-[#D5BDAF] text-white'}`}&gt;{index + 1}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;span className="text-sm font-black text-[#5E503F]"&gt;{rank.name}</span><span class="s7">鬆餅</span><span class="s1">&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span className="text-lg font-black text-[#8E7D6F]"&gt;{rank.count} &lt;span className="text-[10px] opacity-50 uppercase ml-1"&gt;Balls&lt;/span&gt;&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>))</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>)}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>)}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>{activeTab === 'list' &amp;&amp; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="space-y-4 animate-fade text-left font-black"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h2 className="text-lg font-black text-[#8E7D6F] text-center mb-2 font-black uppercase tracking-widest"&gt;</span><span class="s7">訂單清單</span><span class="s1">&lt;/h2&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>{orders.map(o =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div key={o.id} className="bg-white rounded-[2.5rem] p-5 border border-[#E3D5CA] shadow-sm relative overflow-hidden group"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="absolute top-0 left-0 w-1.5 h-full bg-[#D5BDAF] opacity-30"&gt;&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="flex justify-between items-start mb-3"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div onClick={() =&gt; {setSelectedReceipt(o); setView('receipt');}} className="flex-1 cursor-pointer"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;h3 className="text-xl font-black text-[#5E503F] underline decoration-[#D5BDAF]/50 underline-offset-4 decoration-dashed"&gt;{o.name || '</span><span class="s7">客戶</span><span class="s1">'}&lt;/h3&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-lg font-black text-[#8E7D6F] mt-1"&gt;$ {o.totalAmount}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-[10px] font-bold opacity-30 mt-1 uppercase tracking-widest"&gt;{o.deliveryMethod} • {o.paymentMethod}&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="flex flex-col gap-2"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;button onClick={() =&gt; setOrders(orders.filter(ord =&gt; ord.id !== o.id))} className="text-red-200 p-2 active:scale-125"&gt;&lt;Icon name="trash" size={18} /&gt;&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;button onClick={() =&gt; handleEditClick(o)} className="text-[#D5BDAF] p-2 active:scale-125"&gt;&lt;Icon name="edit" size={18} /&gt;&lt;/button&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                                        </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="bg-[#FDF8F5] p-3 rounded-2xl border border-[#D5BDAF]/20 shadow-inner"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;p className="text-[9px] font-black text-[#8E7D6F] uppercase mb-1 flex items-center gap-1"&gt;&lt;Icon name="target" size={10}/&gt; </span><span class="s7">麵糰計量參考</span><span class="s1"> (1</span><span class="s7">團</span><span class="s1">=80</span><span class="s7">顆</span><span class="s1">)&lt;/p&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>{getDoughDemand(o.items).map(d =&gt; (</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div key={d.name} className="flex justify-between text-[11px] py-0.5 border-b border-white last:border-0"&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span&gt;{d.name}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;span className="text-[#8E7D6F]"&gt;{d.batches &gt; 0 ? `${d.batches} </span><span class="s7">團</span><span class="s1"> </span><span class="s7">又</span><span class="s1"> ${d.remainder} </span><span class="s7">顆</span><span class="s1">` : `1 </span><span class="s7">團</span><span class="s1"> (</span><span class="s7">僅需</span><span class="s1"> ${d.remainder} </span><span class="s7">顆</span><span class="s1">)`}&lt;/span&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                            </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>))}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>{orders.length === 0 &amp;&amp; &lt;div className="py-24 text-center opacity-30 italic font-black"&gt;</span><span class="s7">目前清單是空的</span><span class="s1">&lt;/div&gt;}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>)}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/main&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo, useEffect, memo, useCallback } = React;
+
+        // --- 安全圖示組件 (SVG) ---
+        const Icon = ({ name, size = 20, className = "" }) => {
+            const icons = {
+                plus: <path d="M12 5v14M5 12h14" />,
+                minus: <path d="M5 12h14" />,
+                user: <g><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g>,
+                trash: <g><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></g>,
+                edit: <g><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></g>,
+                cart: <g><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></g>,
+                chef: <g><path d="M6 18h12"/><path d="M12 10V4.5a2.5 2.5 0 0 0-5 0V10a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2V8"/><path d="M12 10V4.5a2.5 2.5 0 0 1 5 0V10a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V8"/><path d="M18 18a4 4 0 1 1-8 0"/></g>,
+                back: <g><polyline points="15 18 9 12 15 6"/></g>,
+                target: <g><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></g>,
+                pin: <g><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></g>,
+                list: <g><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></g>,
+                truck: <g><rect width="16" height="10" x="2" y="6" rx="2"/><path d="M18 8h3l3 3v5h-6"/><circle cx="6.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></g>,
+                card: <g><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></g>,
+                send: <g><line x1="22" y1="2" x2="11" y2="13"/><polyline points="22 2 15 22 11 13 2 9 22 2"/></g>,
+                check: <polyline points="20 6 9 17 4 12"/>,
+                gift: <g><rect width="18" height="14" x="3" y="8" rx="2"/><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0 5.997 0A4 4 0 0 0 17.997 5.125 3 3 0 1 0 12 5Z"/><line x1="12" x2="12" y1="22" y2="8"/></g>
+            };
+            return (
+                <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    {icons[name] || <circle cx="12" cy="12" r="10" />}
+                </svg>
+            );
+        };
+
+        const flavorNames = { original: '原味', strawberry: '草莓', cocoa: '可可', matcha: '抹茶' };
+        const extraNames = { cream: '鮮奶油', bag: '加購提袋', receipt: '手開收據', sugar: '加糖粉', fork: '加叉子' };
+        const bankInfo = { bankName: "中國信託 (822)", accountName: "彭永翔", accountNumber: "1755 4046 3472" };
+
+        const productCategories = {
+            '8入': [
+                { id: '8_orig', label: '8入 原味', price: 75, balls: 8, flavors: ['original'] },
+                { id: '8_straw', label: '8入 草莓', price: 95, balls: 8, flavors: ['strawberry'] },
+                { id: '8_matcha', label: '8入 抹茶', price: 80, balls: 8, flavors: ['matcha'] },
+                { id: '8_cocoa', label: '8入 可可', price: 75, balls: 8, flavors: ['cocoa'] },
+            ],
+            '4入': [
+                { id: '4_orig', label: '4入 原味', price: 45, balls: 4, flavors: ['original'] },
+                { id: '4_straw', label: '4入 草莓', price: 60, balls: 4, flavors: ['strawberry'] },
+                { id: '4_matcha', label: '4入 抹茶', price: 55, balls: 4, flavors: ['matcha'] },
+                { id: '4_cocoa', label: '4入 可可', price: 50, balls: 4, flavors: ['cocoa'] },
+            ],
+            '4入雙色': [
+                { id: '4_os', label: '原味+草莓', price: 60, balls: 4, flavors: ['original', 'strawberry'] },
+                { id: '4_om', label: '原味+抹茶', price: 55, balls: 4, flavors: ['original', 'matcha'] },
+                { id: '4_oc', label: '原味+可可', price: 50, balls: 4, flavors: ['original', 'cocoa'] },
+                { id: '4_sm', label: '草莓+抹茶', price: 65, balls: 4, flavors: ['strawberry', 'matcha'] },
+                { id: '4_sc', label: '草莓+可可', price: 60, balls: 4, flavors: ['strawberry', 'cocoa'] },
+                { id: '4_cm', label: '抹茶+可可', price: 60, balls: 4, flavors: ['matcha', 'cocoa'] },
+            ],
+            '綜合': [
+                { id: '8_mix', label: '8入 四色綜合', price: 110, balls: 8, flavors: ['original', 'strawberry', 'cocoa', 'matcha'] },
+                { id: '4_mix', label: '4入 四色綜合', price: 65, balls: 4, flavors: ['original', 'strawberry', 'cocoa', 'matcha'] },
+            ],
+            '真空包': [
+                { id: 'v_40_o', label: '真空40 原味', price: 320, balls: 40, flavors: ['original'], vType: 40 },
+                { id: 'v_40_s', label: '真空40 草莓', price: 500, balls: 40, flavors: ['strawberry'], vType: 40 },
+                { id: 'v_40_c', label: '真空40 可可', price: 385, balls: 40, flavors: ['cocoa'], vType: 40 },
+                { id: 'v_40_m', label: '真空40 抹茶', price: 380, balls: 40, flavors: ['matcha'], vType: 40 },
+                { id: 'v_80_o', label: '真空80 原味', price: 550, balls: 80, flavors: ['original'], vType: 80 },
+                { id: 'v_80_s', label: '真空80 草莓', price: 790, balls: 80, flavors: ['strawberry'], vType: 80 },
+                { id: 'v_80_c', label: '真空80 可可', price: 700, balls: 80, flavors: ['cocoa'], vType: 80 },
+                { id: 'v_80_m', label: '真空80 抹茶', price: 750, balls: 80, flavors: ['matcha'], vType: 80 },
+            ]
+        };
+
+        const calculatePacking = (items) => {
+            let large = 0, small = 0, v40 = 0, v80 = 0;
+            (items || []).forEach(i => {
+                const id = i.id || '';
+                if (id.includes('8_') || id === '8_mix') large += (i.qty || 0);
+                else if (id.includes('4_') || id === '4_mix') small += (i.qty || 0);
+                if (i.vType === 40) v40 += (i.qty || 0);
+                if (i.vType === 80) v80 += (i.qty || 0);
+            });
+            let bag6 = 0, bag4 = 0;
+            let tL = large, tS = small;
+            while (tL >= 9 || tS >= 12) { bag6++; tL = Math.max(0, tL - 9); tS = Math.max(0, tS - 12); }
+            while (tL > 0 || tS > 0) { bag4++; tL = Math.max(0, tL - 5); tS = Math.max(0, tS - 6); }
+            return { bag6, bag4, cooler: Math.ceil(v40 / 2) + v80 };
+        };
+
+        const getDoughDemand = (items) => {
+            const counts = { original: 0, strawberry: 0, cocoa: 0, matcha: 0 };
+            (items || []).forEach(i => {
+                const totalBalls = (i.balls || 0) * (i.qty || 0);
+                const flavors = i.flavors || [];
+                flavors.forEach(f => { if (counts[f] !== undefined) counts[f] += totalBalls / flavors.length; });
+            });
+            return Object.entries(counts)
+                .filter(([_, v]) => v > 0)
+                .map(([k, v]) => ({
+                    name: flavorNames[k],
+                    batches: Math.floor(v / 80),
+                    remainder: Math.round(v % 80),
+                    total: Math.round(v)
+                }));
+        };
+
+        // --- 主應用邏輯 ---
+        const App = () => {
+            const [view, setView] = useState('main'); // 'main' or 'receipt'
+            const [activeTab, setActiveTab] = useState('order');
+            const [orders, setOrders] = useState([]);
+            const [editingId, setEditingId] = useState(null); // 修改中的訂單 ID
+            const [orderCategory, setOrderCategory] = useState('8入');
+            const [currentOrder, setCurrentOrder] = useState({
+                name: '', phone: '', address: '', taxId: '', schoolCompany: '', deliveryTime: '', 
+                deliveryMethod: '自取', paymentMethod: '店內結帳', items: [], 
+                extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, note: ''
+            });
+            const [selectedReceipt, setSelectedReceipt] = useState(null);
+
+            useEffect(() => {
+                const saved = localStorage.getItem('gege_vFinal_Complete_v2');
+                if (saved) setOrders(JSON.parse(saved));
+            }, []);
+
+            useEffect(() => {
+                localStorage.setItem('gege_vFinal_Complete_v2', JSON.stringify(orders));
+            }, [orders]);
+
+            const doughTotal = useMemo(() => {
+                const totals = { original: 0, strawberry: 0, cocoa: 0, matcha: 0 };
+                orders.forEach(o => {
+                    (o.items || []).forEach(i => {
+                        const balls = (i.balls || 0) * (i.qty || 0);
+                        const flavors = i.flavors || [];
+                        flavors.forEach(f => { if (totals[f] !== undefined) totals[f] += balls / flavors.length; });
+                    });
+                });
+                return Object.entries(totals).map(([k, v]) => ({
+                    name: flavorNames[k], batches: Math.floor(v / 80), remainder: Math.round(v % 80), total: Math.round(v)
+                })).filter(d => d.total > 0);
+            }, [orders]);
+
+            const handleAddItem = (opt) => {
+                const existing = currentOrder.items.find(i => i.id === opt.id);
+                if (existing) {
+                    setCurrentOrder({
+                        ...currentOrder,
+                        items: currentOrder.items.map(i => i.id === opt.id ? { ...i, qty: (i.qty || 0) + 1 } : i)
+                    });
+                } else {
+                    setCurrentOrder({
+                        ...currentOrder,
+                        items: [...currentOrder.items, { ...opt, qty: 1 }]
+                    });
+                }
+            };
+
+            const handleSaveOrder = () => {
+                if (!currentOrder.name || currentOrder.items.length === 0) return;
+                const p = calculatePacking(currentOrder.items);
+                const iSum = currentOrder.items.reduce((s, i) => s + (i.price * (i.qty || 0)), 0);
+                const bSum = currentOrder.extras.bag ? (p.bag6 + p.bag4) * 2 : 0;
+                const totalAmount = iSum + bSum;
+
+                if (editingId) {
+                    // 修改模式
+                    setOrders(orders.map(o => o.id === editingId ? { ...currentOrder, id: editingId, totalAmount, timestamp: new Date().toLocaleString() } : o));
+                    setEditingId(null);
+                } else {
+                    // 新增模式
+                    const newOrder = { ...currentOrder, id: Date.now(), totalAmount, timestamp: new Date().toLocaleString() };
+                    setOrders([newOrder, ...orders]);
+                }
+
+                // 重置
+                setCurrentOrder({ name: '', phone: '', address: '', taxId: '', schoolCompany: '', deliveryTime: '', deliveryMethod: '自取', paymentMethod: '店內結帳', items: [], extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, note: '' });
+                setActiveTab('list');
+            };
+
+            const handleEditClick = (order) => {
+                setCurrentOrder(order);
+                setEditingId(order.id);
+                setActiveTab('order');
+            };
+
+            const onCopyLine = (order) => {
+                const p = calculatePacking(order.items);
+                let payInfo = `【付款方式：${order.paymentMethod}】`;
+                if (order.paymentMethod === '匯款') {
+                    payInfo += `\n🏦 中信(822) ${bankInfo.accountNumber}\n👤 戶名：${bankInfo.accountName}\n(匯款後請提供末五碼核對)`;
+                }
+
+                let itemsText = order.items.map(i => `• ${i.label} x ${i.qty} = $${i.price * i.qty}`).join('\n');
+                let extraList = [];
+                if (order.extras.cream) extraList.push('鮮奶油');
+                if (order.extras.sugar) extraList.push('加糖粉');
+                if (order.extras.fork) extraList.push('加叉子');
+                if (order.extras.receipt) extraList.push('附收據');
+                let extrasText = extraList.length > 0 ? `\n• 其他要求：${extraList.join('、')}` : '';
+
+                let bagText = order.extras.bag ? `\n• 提袋費($2)：${p.bag6 + p.bag4} 個 = $${(p.bag6 + p.bag4) * 2}` : '';
+                let coolerText = p.cooler > 0 ? `\n🎁 真空包贈送保冷袋：${p.cooler} 個` : '';
+
+                const fullText = `【華夫格格 - 訂單對帳單】\n客戶：${order.name}\n配送：${order.deliveryMethod}\n時間：${order.deliveryTime?.replace('T',' ')}\n${payInfo}\n--------------------\n${itemsText}${extrasText}${bagText}${coolerText}\n--------------------\n💰 總計金額：$ ${order.totalAmount}\n備註：${order.note || '無'}\n\n感謝您的訂購！`;
+                
+                const textArea = document.createElement("textarea");
+                textArea.value = fullText; document.body.appendChild(textArea);
+                textArea.select(); document.execCommand('copy'); document.body.removeChild(textArea);
+                alert("對帳文字已複製成功！");
+                setView('main');
+            };
+
+            // --- 視圖：收據明細頁面 ---
+            if (view === 'receipt' && selectedReceipt) {
+                const p = calculatePacking(selectedReceipt.items);
+                return (
+                    <div className="min-h-screen bg-white animate-fade flex flex-col text-left">
+                        <div className="p-4 border-b flex items-center bg-white sticky top-0 z-50">
+                            <button onClick={() => setView('main')} className="p-2 text-[#8E7D6F] flex items-center font-bold">
+                                <Icon name="back" size={24} /> 返回
+                            </button>
+                            <h2 className="flex-1 text-center font-black text-[#5E503F]">對帳明細</h2>
+                            <div className="w-10"></div>
+                        </div>
+                        <div className="flex-1 overflow-y-auto p-4 pb-40">
+                            <div className="receipt-container">
+                                <div className="text-center mb-6 border-b-2 border-dashed border-[#D5BDAF]/30 pb-4">
+                                    <h3 className="text-2xl font-black text-[#D5BDAF] tracking-widest">華夫格格</h3>
+                                    <p className="text-[10px] opacity-40 uppercase tracking-widest">Belgian Waffles</p>
+                                </div>
+                                <div className="text-center space-y-2 mb-6 text-left flex flex-col items-center">
+                                    <p className="text-4xl font-black text-[#5E503F] tracking-tighter">{selectedReceipt.name}</p>
+                                    <div className="flex justify-center gap-2">
+                                        <span className="bg-[#8E7D6F] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase"><Icon name="truck" size={10} className="inline mr-1"/>{selectedReceipt.deliveryMethod}</span>
+                                        <span className="bg-[#D5BDAF] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase"><Icon name="card" size={10} className="inline mr-1"/>{selectedReceipt.paymentMethod}</span>
+                                    </div>
+                                    <p className="text-[11px] font-bold text-gray-400">{selectedReceipt.phone || '無電話紀錄'}</p>
+                                    {selectedReceipt.address && <p className="text-[11px] font-bold text-[#8E7D6F] flex items-center justify-center gap-1"><Icon name="pin" size={10}/>{selectedReceipt.address}</p>}
+                                </div>
+                                
+                                <div className="space-y-4 mb-6 font-bold border-t border-gray-100 pt-4">
+                                    <p className="text-[10px] text-[#D5BDAF] uppercase tracking-widest text-left">● 訂購品項</p>
+                                    {selectedReceipt.items.map((i, idx) => (
+                                        <div key={idx} className="flex justify-between items-end border-b border-gray-50 pb-2">
+                                            <div className="text-left leading-tight"><p className="text-lg">• {i.label}</p><p className="text-[10px] opacity-40">$ {i.price} x {i.qty}</p></div>
+                                            <span className="text-[#8E7D6F]">$ {i.price * i.qty}</span>
+                                        </div>
+                                    ))}
+                                    
+                                    <p className="text-[10px] text-[#D5BDAF] uppercase tracking-widest pt-2 text-left">● 加購與服務</p>
+                                    <div className="space-y-1 text-sm pt-1 text-left">
+                                        {Object.entries(selectedReceipt.extras).map(([key, value]) => {
+                                            if (key === 'bag') return null;
+                                            return value ? (
+                                                <div key={key} className="flex justify-between text-[#5E503F] border-b border-gray-50 pb-1">
+                                                    <span>• {extraNames[key]}</span>
+                                                    <span className="text-[#8E7D6F]">$ 0</span>
+                                                </div>
+                                            ) : null;
+                                        })}
+                                        {selectedReceipt.extras.bag && (p.bag6 > 0 || p.bag4 > 0) && (
+                                            <React.Fragment>
+                                                {p.bag6 > 0 && <div className="flex justify-between"><span>• 專用 6杯提袋 ($2) x {p.bag6}</span><span>$ {p.bag6 * 2}</span></div>}
+                                                {p.bag4 > 0 && <div className="flex justify-between"><span>• 專用 4杯提袋 ($2) x {p.bag4}</span><span>$ {p.bag4 * 2}</span></div>}
+                                            </React.Fragment>
+                                        )}
+                                        {p.cooler > 0 && (
+                                            <div className="flex justify-between text-blue-600 font-black pt-1">
+                                                <span>• 贈送：真空包專用保冷袋</span>
+                                                <span>x {p.cooler} 個 ($0)</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="bg-[#8E7D6F] p-6 rounded-[2rem] flex justify-between items-center text-white mb-6 text-left">
+                                    <p className="text-xs font-black uppercase">應付總額 TOTAL</p>
+                                    <p className="text-3xl font-black">$ {selectedReceipt.totalAmount}</p>
+                                </div>
+                                {selectedReceipt.note && <div className="bg-white p-3 rounded-xl border-2 border-dashed border-[#D5BDAF]/30 text-xs italic font-bold text-center text-gray-500">"{selectedReceipt.note}"</div>}
+                            </div>
+                        </div>
+                        <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-50">
+                            <button onClick={() => onCopyLine(selectedReceipt)} className="w-full bg-[#8E7D6F] text-white p-5 rounded-2xl font-black text-xl shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all">
+                                <Icon name="send" /> 一鍵複製明細並回清單
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            // --- 視圖：主要分頁介面 ---
+            return (
+                <div className="min-h-screen pb-24 text-left font-black">
+                    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#D5BDAF] p-3 flex justify-around shadow-lg rounded-t-[2rem]">
+                        {[
+                            { id: 'order', label: '下單', icon: 'plus' },
+                            { id: 'calc', label: '麵糰', icon: 'chef' },
+                            { id: 'list', label: '清單', icon: 'list' },
+                        ].map(t => (
+                            <button key={t.id} onClick={() => {setActiveTab(t.id); setEditingId(null);}} className={`flex flex-col items-center gap-1 p-2 rounded-2xl transition-all ${activeTab === t.id ? 'bg-[#FDF8F5] text-[#8E7D6F] scale-110 shadow-inner' : 'text-white opacity-70'}`}>
+                                <Icon name={t.icon} size={20} /><span className="text-[10px] font-bold">{t.label}</span>
+                            </button>
+                        ))}
+                    </nav>
+
+                    <main className="p-4 max-w-lg mx-auto space-y-6 pt-4">
+                        {activeTab === 'order' && (
+                            <div className="space-y-4 animate-fade">
+                                <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4">
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="user" size={18} /> {editingId ? '正在修改訂單' : '客戶基本資料'}</h2>
+                                    <input type="text" placeholder="客戶姓名" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold" value={currentOrder.name} onChange={e => setCurrentOrder({...currentOrder, name: e.target.value})} />
+                                    <input type="tel" placeholder="電話號碼" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold" value={currentOrder.phone} onChange={e => setCurrentOrder({...currentOrder, phone: e.target.value})} />
+                                    <div className="grid grid-cols-2 gap-2 text-[11px]">
+                                        <div className="flex bg-[#F9F6F4] rounded-xl p-1">
+                                            {['自取','外送','Panda'].map(m => (
+                                                <button key={m} onClick={()=>setCurrentOrder({...currentOrder, deliveryMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.deliveryMethod === m ?'bg-[#8E7D6F] text-white shadow-sm':'text-[#8E7D6F]'}`}>{m}</button>
+                                            ))}
+                                        </div>
+                                        <div className="flex bg-[#F9F6F4] rounded-xl p-1">
+                                            {['店內','Line','匯款'].map(m => (
+                                                <button key={m} onClick={()=>setCurrentOrder({...currentOrder, paymentMethod: m})} className={`flex-1 py-1.5 rounded-lg ${currentOrder.paymentMethod === m ?'bg-[#8E7D6F] text-white shadow-sm':'text-[#8E7D6F]'}`}>{m}</button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <input type="text" placeholder="配送詳細地址 (自取可不填)" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.address} onChange={e => setCurrentOrder({...currentOrder, address: e.target.value})} />
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <input type="text" placeholder="統編" className="bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.taxId} onChange={e => setCurrentOrder({...currentOrder, taxId: e.target.value})} />
+                                        <input type="text" placeholder="學校/單位" className="bg-[#F9F6F4] rounded-xl p-3 outline-none text-sm" value={currentOrder.schoolCompany} onChange={e => setCurrentOrder({...currentOrder, schoolCompany: e.target.value})} />
+                                    </div>
+                                    <input type="datetime-local" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none text-[#8E7D6F]" value={currentOrder.deliveryTime} onChange={e => setCurrentOrder({...currentOrder, deliveryTime: e.target.value})} />
+                                </div>
+
+                                <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4">
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="cart" /> 產品規格選擇</h2>
+                                    <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar text-[10px]">
+                                        {Object.keys(productCategories).map(cat => (
+                                            <button key={cat} onClick={()=>setOrderCategory(cat)} className={`flex-shrink-0 px-4 py-1.5 rounded-full ${orderCategory===cat?'bg-[#8E7D6F] text-white shadow-md':'bg-[#E3D5CA]'}`}>{cat}</button>
+                                        ))}
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2 text-left font-bold">
+                                        {productCategories[orderCategory].map(opt => (
+                                            <button key={opt.id} onClick={() => handleAddItem(opt)} className="p-3 bg-[#F9F6F4] rounded-2xl border border-transparent active:border-[#D5BDAF] transition-all">
+                                                <p className="text-xs font-black">{opt.label}</p>
+                                                <p className="text-[10px] text-[#8E7D6F] font-black">$ {opt.price}</p>
+                                            </button>
+                                        ))}
+                                    </div>
+                                    {currentOrder.items.length > 0 && (
+                                        <div className="pt-4 border-t border-dashed space-y-2 font-black">
+                                            {currentOrder.items.map(i => (
+                                                <div key={i.id} className="flex justify-between items-center bg-[#FDF8F5] p-3 rounded-xl border border-[#E3D5CA]/50 text-xs">
+                                                    <span className="flex-1">{i.label}</span>
+                                                    <div className="flex items-center gap-2">
+                                                        <button onClick={() => setCurrentOrder({...currentOrder, items: currentOrder.items.map(it => it.id === i.id ? {...it, qty: Math.max(0, (it.qty||0)-1)} : it).filter(it => it.qty !== 0)})} className="p-1 active:scale-75 text-[#D5BDAF]"><Icon name="minus" size={14}/></button>
+                                                        <input type="number" value={i.qty} onChange={(e) => {const val = e.target.value === '' ? '' : parseInt(e.target.value)||0; setCurrentOrder({...currentOrder, items: currentOrder.items.map(it => it.id === i.id ? {...it, qty: val} : it)})}} className="w-10 bg-white border rounded p-1 text-center outline-none" />
+                                                        <button onClick={() => setCurrentOrder({...currentOrder, items: currentOrder.items.map(it => it.id === i.id ? {...it, qty: (it.qty||0)+1} : it)})} className="p-1 active:scale-75 text-[#D5BDAF]"><Icon name="plus" size={14}/></button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 text-left">
+                                    <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="gift" /> 加購項目與備註</h2>
+                                    <div className="grid grid-cols-2 gap-2 text-[10px]">
+                                        {Object.entries(extraNames).map(([k, label]) => (
+                                            <button key={k} onClick={()=>setCurrentOrder({...currentOrder, extras: {...currentOrder.extras, [k]: !currentOrder.extras[k]}})} className={`p-3 rounded-xl border flex items-center justify-between transition-all ${currentOrder.extras[k]?'bg-[#D5BDAF] text-white':'bg-[#F9F6F4]'}`}><span>{label}</span>{currentOrder.extras[k]&&<Icon name="check" size={14}/>}</button>
+                                        ))}
+                                    </div>
+                                    <textarea placeholder="特別要求備註..." className="w-full bg-[#F9F6F4] rounded-xl p-4 outline-none text-sm min-h-[80px]" value={currentOrder.note} onChange={e=>setCurrentOrder({...currentOrder,note:e.target.value})}></textarea>
+                                </div>
+                                <button onClick={handleSaveOrder} className="w-full bg-[#8E7D6F] text-white p-5 rounded-[2rem] font-black text-xl shadow-xl active:scale-95 transition-all">{editingId ? '確認修改訂單' : '確認儲存訂單'}</button>
+                                {editingId && <button onClick={() => {setEditingId(null); handleSaveOrder();}} className="w-full text-gray-400 font-bold text-sm">取消修改</button>}
+                            </div>
+                        )}
+
+                        {activeTab === 'calc' && (
+                            <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-[#E3D5CA] space-y-6 animate-fade font-black text-left">
+                                <h2 className="text-xl font-black text-[#8E7D6F] flex items-center justify-center gap-3"><Icon name="chef" /> 當前揉麵總量需求</h2>
+                                <div className="space-y-4">
+                                    {doughTotal.map(d => (
+                                        <div key={d.name} className="p-6 bg-[#FDF8F5] rounded-3xl border border-[#D5BDAF]/20 flex justify-between items-center shadow-inner">
+                                            <p className="text-xl text-[#5E503F]">{d.name}</p>
+                                            <div className="text-right">
+                                                <p className="text-2xl text-[#8E7D6F]">{d.batches > 0 ? `${d.batches} 團 又 ${d.remainder} 顆` : `1 團 (需求 ${d.total} 顆)`}</p>
+                                                <p className="text-[10px] opacity-40 uppercase tracking-widest">揉麵單位 (1團=80顆)</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {doughTotal.length === 0 && <div className="py-24 text-center opacity-30 italic text-lg w-full">目前無訂單製作需求</div>}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'list' && (
+                            <div className="space-y-4 animate-fade text-left font-black">
+                                <h2 className="text-lg font-black text-[#8E7D6F] text-center mb-2 font-black uppercase tracking-widest">訂單清單</h2>
+                                {orders.map(o => (
+                                    <div key={o.id} className="bg-white rounded-[2rem] p-5 border border-[#E3D5CA] shadow-sm relative overflow-hidden group">
+                                        <div className="absolute top-0 left-0 w-1.5 h-full bg-[#D5BDAF] opacity-30"></div>
+                                        <div className="flex justify-between items-start mb-3">
+                                            <div onClick={() => {setSelectedReceipt(o); setView('receipt');}} className="flex-1 cursor-pointer">
+                                                <h3 className="text-xl font-black text-[#5E503F] underline decoration-[#D5BDAF]/50 underline-offset-4 decoration-dashed">{o.name || '客戶'}</h3>
+                                                <p className="text-lg font-black text-[#8E7D6F] mt-1">$ {o.totalAmount}</p>
+                                                <p className="text-[10px] font-bold opacity-30 mt-1 uppercase tracking-widest">{o.deliveryMethod} • {o.paymentMethod}</p>
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                <button onClick={() => setOrders(orders.filter(ord=>ord.id!==o.id))} className="text-red-200 p-2 active:scale-125"><Icon name="trash" size={18}/></button>
+                                                {/* 修改訂單按鈕 */}
+                                                <button onClick={() => handleEditClick(o)} className="text-[#D5BDAF] p-2 active:scale-125"><Icon name="edit" size={18}/></button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="bg-[#FDF8F5] p-3 rounded-2xl border border-[#D5BDAF]/20 shadow-inner">
+                                            <p className="text-[9px] font-black text-[#8E7D6F] uppercase mb-1 flex items-center gap-1"><Icon name="target" size={10}/> 麵糰計量參考 (1團=80顆)</p>
+                                            {getDoughDemand(o.items).map(d => (
+                                                <div key={d.name} className="flex justify-between text-[11px] py-0.5 border-b border-white last:border-0">
+                                                    <span>{d.name}</span>
+                                                    <span className="text-[#8E7D6F]">{d.batches > 0 ? `${d.batches} 團 又 ${d.remainder} 顆` : `1 團 (僅需 ${d.remainder} 顆)`}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                                {orders.length === 0 && <div className="py-24 text-center opacity-30 italic font-black">目前清單是空的</div>}
+                            </div>
+                        )}
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
