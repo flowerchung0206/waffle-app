@@ -144,7 +144,15 @@
         };
 
         const flavorNames = { original: '原味', strawberry: '草莓', cocoa: '可可', matcha: '抹茶' };
-        const extraNames = { cream: '鮮奶油', bag: '加購提袋', receipt: '手開收據', sugar: '加糖粉', fork: '加叉子' };
+        const extraNames = { 
+            cream: '不要鮮奶油', 
+            sugar: '不要糖粉', 
+            fork: '叉子', 
+            bag: '加購提袋', 
+            receipt: '手開收據',
+            birthday: '生日卡',
+            christmas: '聖誕卡'
+        };
         
         const productCategories = {
             '8入組': [
@@ -210,10 +218,21 @@
             const [editingId, setEditingId] = useState(null);
             const [orderCategory, setOrderCategory] = useState('8入組');
             
+            // 更新初始狀態，加入 taxId
             const [currentOrder, setCurrentOrder] = useState({
                 name: '', phone: '', address: '', deliveryTime: '', deliveryMethod: '自取', paymentMethod: '店內結帳', 
-                items: [], extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, note: '',
-                isPaid: false, isKneaded: false
+                items: [], 
+                extras: { 
+                    cream: false, 
+                    bag: true, 
+                    receipt: false, 
+                    sugar: false, 
+                    fork: false,
+                    birthday: false,
+                    christmas: false
+                }, 
+                note: '',
+                isPaid: false, isKneaded: false, isContinueOrder: false, organization: '', taxId: ''
             });
             const [selectedReceipt, setSelectedReceipt] = useState(null);
 
@@ -262,7 +281,7 @@
                 }
             }, [orders, history, isLoaded]);
 
-            // --- 統計數據 ---
+            // --- 統計數據 (修復日期解析邏輯) ---
             const statistics = useMemo(() => {
                 const flavorSales = { original: 0, strawberry: 0, cocoa: 0, matcha: 0 };
                 const monthly = {};
@@ -272,28 +291,47 @@
                 [...safeOrders, ...safeHistory].forEach(o => {
                     let dateObj;
                     const ts = o.timestamp;
-                    if (typeof ts === 'string') {
+                    
+                    // 嘗試解析多種日期格式
+                    if (typeof ts === 'number') {
                         dateObj = new Date(ts);
+                    } else if (typeof ts === 'string') {
+                        dateObj = new Date(ts);
+                        // 如果標準解析失敗，嘗試手動解析舊格式 (e.g. 2024/1/6 下午...)
                         if (isNaN(dateObj.getTime())) {
-                            const parts = ts.split(' ')[0].split('/');
-                            if (parts.length === 3) dateObj = new Date(parts[0], parts[1]-1, parts[2]);
+                            const datePart = ts.split(' ')[0]; // 取出 2024/1/6
+                            const parts = datePart.split('/');
+                            if (parts.length === 3) {
+                                // 建立日期物件 (注意月份是 0-11)
+                                dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+                            }
                         }
-                    } else {
-                        dateObj = new Date(ts);
                     }
-                    const mKey = isNaN(dateObj.getTime()) ? '未知' : `${dateObj.getFullYear()}/${dateObj.getMonth() + 1}`;
-                    let oBalls = 0;
-                    o.items.forEach(i => {
-                        const balls = (i.balls || 0) * (i.qty || 0);
-                        oBalls += balls;
-                        const per = balls / (i.flavors?.length || 1);
-                        i.flavors?.forEach(f => { if (flavorSales[f] !== undefined) flavorSales[f] += per; });
-                    });
-                    monthly[mKey] = (monthly[mKey] || 0) + oBalls;
+
+                    // 再次檢查是否有效
+                    if (!dateObj || isNaN(dateObj.getTime())) {
+                        // 如果真的解析不出來，就不計入月份統計，或歸類為未知
+                        // 這裡選擇歸類為未知，避免報錯
+                        // console.warn("Invalid date:", ts);
+                    } else {
+                        const mKey = `${dateObj.getFullYear()}/${dateObj.getMonth() + 1}`;
+                        let oBalls = 0;
+                        o.items.forEach(i => {
+                            const balls = (i.balls || 0) * (i.qty || 0);
+                            oBalls += balls;
+                            const per = balls / (i.flavors?.length || 1);
+                            i.flavors?.forEach(f => { if (flavorSales[f] !== undefined) flavorSales[f] += per; });
+                        });
+                        monthly[mKey] = (monthly[mKey] || 0) + oBalls;
+                    }
                 });
+                
                 return {
                     ranking: Object.entries(flavorSales).map(([k, v]) => ({ name: flavorNames[k], batches: (v/80).toFixed(1) })).sort((a, b) => b.batches - a.batches),
-                    monthly: Object.entries(monthly).map(([m, c]) => ({ month: m, batches: (c/80).toFixed(1) })).sort((a, b) => b.month > a.month ? 1 : -1)
+                    monthly: Object.entries(monthly).map(([m, c]) => ({ month: m, batches: (c/80).toFixed(1) })).sort((a, b) => {
+                        // 確保日期排序正確
+                        return new Date(b.month) - new Date(a.month);
+                    })
                 };
             }, [orders, history]);
 
@@ -357,7 +395,21 @@
                 } else {
                     setOrders(prev => [newOrder, ...prev]);
                 }
-                setCurrentOrder({ name: '', phone: '', address: '', deliveryTime: '', deliveryMethod: '自取', paymentMethod: '店內結帳', items: [], extras: { cream: false, bag: true, receipt: false, sugar: false, fork: false }, note: '', isPaid: false, isKneaded: false });
+                // 重置時包含新欄位
+                setCurrentOrder({ 
+                    name: '', organization: '', phone: '', address: '', deliveryTime: '', deliveryMethod: '自取', paymentMethod: '店內結帳', 
+                    items: [], 
+                    extras: { 
+                        cream: false, 
+                        bag: true, 
+                        receipt: false, 
+                        sugar: false, 
+                        fork: false,
+                        birthday: false,
+                        christmas: false
+                    }, 
+                    note: '', isPaid: false, isKneaded: false, isContinueOrder: false, taxId: ''
+                });
                 setActiveTab('list');
             };
 
@@ -396,7 +448,12 @@
                 let bagText = order.extras.bag ? `\n• 提袋($2) x ${p.bag6+p.bag4} = $${(p.bag6+p.bag4)*2}` : '';
                 let coolerText = p.cooler > 0 ? `\n🎁 贈送保冷袋 x ${p.cooler} 個` : '';
 
-                const text = `【華夫格格 - 訂單明細】\n客戶：${order.name}\n配送：${order.deliveryMethod}\n時間：${order.deliveryTime?.replace('T',' ')}\n${payInfo}\n--------------------\n${itemsText}${extras ? '\n• 加購：' + extras : ''}${bagText}${coolerText}\n--------------------\n💰 總計：$ ${order.totalAmount}\n備註：${order.note || '無'}\n\n感謝您的訂購！`;
+                const orgText = order.organization ? `(${order.organization})` : '';
+                const continueText = order.isContinueOrder ? '【續單/分送】' : '';
+                // 增加統編顯示
+                const taxIdText = order.extras.receipt && order.taxId ? `\n統一編號：${order.taxId}` : '';
+
+                const text = `【華夫格格 - 訂單明細】\n客戶：${order.name} ${orgText} ${continueText}${taxIdText}\n配送：${order.deliveryMethod}\n時間：${order.deliveryTime ? order.deliveryTime.replace('T', ' ') : '未指定'}\n${payInfo}\n--------------------\n${itemsText}${extras ? '\n• 加購：' + extras : ''}${bagText}${coolerText}\n--------------------\n💰 總計：$ ${order.totalAmount}\n備註：${order.note || '無'}\n\n感謝您的訂購！`;
                 
                 try {
                      if (navigator.clipboard && window.isSecureContext) {
@@ -468,11 +525,18 @@
                                     <p className="text-[10px] opacity-40 uppercase">Belgian Waffles</p>
                                 </div>
                                 <div className="text-center mb-6">
-                                    <p className="text-4xl font-black text-[#5E503F] tracking-tighter mb-4">{selectedReceipt.name}</p>
+                                    <p className="text-4xl font-black text-[#5E503F] tracking-tighter mb-1">{selectedReceipt.name}</p>
+                                    {selectedReceipt.organization && <p className="text-lg text-gray-400 font-bold mb-1">({selectedReceipt.organization})</p>}
+                                    {/* 顯示統編 */}
+                                    {selectedReceipt.extras.receipt && selectedReceipt.taxId && <p className="text-sm text-[#8E7D6F] font-black mb-1 tracking-widest">統編：{selectedReceipt.taxId}</p>}
+                                    
+                                    {selectedReceipt.isContinueOrder && <p className="text-sm text-blue-500 font-bold mb-2">【續單 / 分送】</p>}
+                                    
                                     <div className="flex justify-center gap-2 mb-2">
                                         <span className="bg-[#8E7D6F] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase"><Icon name="truck" size={10} className="inline mr-1"/>{selectedReceipt.deliveryMethod}</span>
                                         <span className="bg-[#D5BDAF] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase"><Icon name="card" size={10} className="inline mr-1"/>{selectedReceipt.paymentMethod}</span>
                                     </div>
+                                    {selectedReceipt.deliveryTime && <p className="text-sm font-bold text-[#8E7D6F] mb-1 flex items-center justify-center gap-1"><Icon name="history" size={14}/> {selectedReceipt.deliveryTime.replace('T', ' ')}</p>}
                                     {selectedReceipt.address && <p className="text-[11px] font-bold text-[#8E7D6F] flex items-center justify-center gap-1 mt-1 text-center"><Icon name="pin" size={10}/>{selectedReceipt.address}</p>}
                                 </div>
                                 <div className="bg-white p-5 rounded-3xl border border-[#D5BDAF]/20 text-[12px] font-bold mb-6">
@@ -544,7 +608,21 @@
                             <div className="space-y-4 animate-fade">
                                 <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4">
                                     <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2"><Icon name="user" size={18} /> {editingId ? '正在修改訂單' : '客戶基本資料'}</h2>
-                                    <input type="text" placeholder="客戶姓名" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold text-base border-transparent focus:border-[#D5BDAF] border transition-colors" value={currentOrder.name} onChange={e => setCurrentOrder({...currentOrder, name: e.target.value})} />
+                                    
+                                    <div className="flex gap-2">
+                                        <div className="flex-1">
+                                            <input type="text" placeholder="客戶姓名" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold text-base border-transparent focus:border-[#D5BDAF] border transition-colors" value={currentOrder.name} onChange={e => setCurrentOrder({...currentOrder, name: e.target.value})} />
+                                        </div>
+                                        <div className="flex items-center justify-center bg-[#F9F6F4] px-2 rounded-xl border border-transparent">
+                                            <label className="flex items-center gap-1 text-xs text-[#8E7D6F] whitespace-nowrap cursor-pointer">
+                                                <input type="checkbox" checked={currentOrder.isContinueOrder} onChange={e => setCurrentOrder({...currentOrder, isContinueOrder: e.target.checked})} className="custom-checkbox w-4 h-4" />
+                                                續單/同客分送
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <input type="text" placeholder="公司行號 / 學校 (選填)" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold text-sm border-transparent focus:border-[#D5BDAF] border transition-colors" value={currentOrder.organization} onChange={e => setCurrentOrder({...currentOrder, organization: e.target.value})} />
+
                                     <input type="tel" placeholder="電話" className="w-full bg-[#F9F6F4] rounded-xl p-3 outline-none font-bold text-base border-transparent focus:border-[#D5BDAF] border transition-colors" value={currentOrder.phone} onChange={e => setCurrentOrder({...currentOrder, phone: e.target.value})} />
                                     <div className="grid grid-cols-2 gap-2 text-[10px]">
                                         <div className="flex bg-[#F9F6F4] rounded-xl p-1 font-bold">
@@ -603,6 +681,12 @@
                                             <button key={k} onClick={() => setCurrentOrder({...currentOrder, extras: {...currentOrder.extras, [k]: !currentOrder.extras[k]}})} className={`p-3 rounded-xl border flex items-center justify-between transition-all font-black ${currentOrder.extras[k] ? 'bg-[#D5BDAF] text-white border-[#D5BDAF]' : 'bg-[#F9F6F4] border-transparent'}`}><span>{label}</span>{currentOrder.extras[k] && <Icon name="check" size={14} />}</button>
                                         ))}
                                     </div>
+                                    {/* 統一編號輸入框 */}
+                                    {currentOrder.extras.receipt && (
+                                        <div className="animate-fade">
+                                            <input type="text" placeholder="統一編號 (如需)" className="w-full bg-[#FDF8F5] rounded-xl p-3 outline-none font-bold text-sm border border-[#D5BDAF] text-[#5E503F]" value={currentOrder.taxId} onChange={e => setCurrentOrder({...currentOrder, taxId: e.target.value})} />
+                                        </div>
+                                    )}
                                     <textarea placeholder="點此輸入特別叮嚀..." className="w-full bg-[#F9F6F4] rounded-xl p-4 outline-none text-sm font-black min-h-[80px]" value={currentOrder.note} onChange={e => setCurrentOrder({...currentOrder, note: e.target.value})}></textarea>
                                 </div>
                                 <button onClick={handleSaveOrder} className="w-full bg-[#8E7D6F] text-white p-5 rounded-[2rem] font-black text-xl shadow-xl active:scale-95 transition-all">{editingId ? '更新修改' : '確認儲存'}</button>
@@ -619,9 +703,16 @@
                                             <div className="absolute top-0 left-0 w-1.5 h-full bg-[#D5BDAF] opacity-30"></div>
                                             <div onClick={() => {setSelectedReceipt(o); setView('receipt');}} className="cursor-pointer mb-2">
                                                 <div className="flex justify-between items-center mb-1">
-                                                    <h3 className="text-xl font-black text-[#5E503F] underline decoration-[#D5BDAF]/30 underline-offset-4 decoration-dashed">{o.name || '客戶'}</h3>
+                                                    <div>
+                                                        <h3 className="text-xl font-black text-[#5E503F] underline decoration-[#D5BDAF]/30 underline-offset-4 decoration-dashed inline-block mr-2">{o.name || '客戶'}</h3>
+                                                        {o.organization && <span className="text-xs text-gray-400 font-bold">({o.organization})</span>}
+                                                        {o.isContinueOrder && <span className="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full ml-1 align-top">續單</span>}
+                                                    </div>
                                                     <span className="text-lg font-black text-[#8E7D6F]">$ {o.totalAmount}</span>
                                                 </div>
+                                                <p className="text-[11px] font-bold text-[#8E7D6F] mb-1">
+                                                    {o.deliveryTime ? `配送時間：${o.deliveryTime.replace('T', ' ')}` : '時間未指定'}
+                                                </p>
                                                 <p className="text-[10px] font-bold opacity-30 uppercase tracking-widest">{o.deliveryMethod} • {o.paymentMethod} • {o.items.length} 項產品</p>
                                                 {/* 麵團計算 (僅顯示於清單) */}
                                                 <div className="mt-2 bg-[#F9F6F4] p-2 rounded-lg text-[10px] flex items-center gap-1 flex-wrap">
@@ -721,12 +812,12 @@
                                 <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 font-black">
                                     <h2 className="text-lg font-black text-[#8E7D6F] flex items-center gap-2 text-center justify-center"><Icon name="chart" /> 每月銷售數據</h2>
                                     <div className="space-y-2">
-                                        {statistics.monthly.map(d => (
+                                        {statistics.monthly.length > 0 ? statistics.monthly.map(d => (
                                             <div key={d.month} className="flex justify-between p-4 bg-[#F9F6F4] rounded-2xl">
                                                 <span className="text-[#5E503F]">{d.month} 月份</span>
                                                 <span className="text-[#8E7D6F]">{d.batches} 團</span>
                                             </div>
-                                        ))}
+                                        )) : <div className="text-center py-4 text-gray-300">尚無足夠數據顯示</div>}
                                     </div>
                                 </div>
                                 <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-[#E3D5CA] space-y-4 font-black">
